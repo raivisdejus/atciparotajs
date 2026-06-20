@@ -68,5 +68,5 @@ def ordinal(n: int, bucket: int = 1) -> str:
         if remainder == 0:
             return _apply_ending(thou_word, bucket)
         else:
-            return thou_word + "i " + ordinal(remainder, bucket)
+            return thou_word + " " + ordinal(remainder, bucket)
     return str(n)

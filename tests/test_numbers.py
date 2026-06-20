@@ -3,7 +3,6 @@ Pārbaudes gadījumi / Test cases for atciparotājs.
 
 Each line shows: input text → expected output.
 The comment shows the grammatical case and gender.
-This file can be reviewed and extended by any Latvian speaker.
 
 Izmantotie vārdi / Words used in tests:
   suns     = dog (masculine)
@@ -126,6 +125,45 @@ ABBREVIATION_CASES = [
     ("t.i. pieci",          "tas ir pieci"),
 ]
 
+# ============================================================
+# Datumi (dates) — memorable science milestones
+# ============================================================
+DATE_CASES = [
+    ("4. oktobris, 1957. gads",
+     "ceturtais oktobris, tūkstoš deviņsimt piecdesmit septītais gads"),
+    ("1961. gada 12. aprīlis",
+     "tūkstoš deviņsimt sešdesmit pirmā gada divpadsmitais aprīlis"),
+    ("1969. gada 20. jūlijā",
+     "tūkstoš deviņsimt sešdesmit devītā gada divdesmitajā jūlijā"),
+]
+
+# ============================================================
+# Iniciāļi (initials) — single uppercase letter after a name
+# must NOT be converted as a Roman numeral
+# ============================================================
+INITIAL_CASES = [
+    # "V." after a name is a surname initial, not Roman numeral V (= 5)
+    ("Kārlis V. uzvarēja",     "Kārlis V. uzvarēja"),
+    ("Jānis A. sacīja",        "Jānis A. sacīja"),
+]
+
+# ============================================================
+# Numuri (reference numbers) — "nr." before a number
+# ============================================================
+NR_CASES = [
+    ("Vilciens nr. 67",        "Vilciens numur sešdesmit septiņi"),
+    ("Autobuss nr. 3",         "Autobuss numur trīs"),
+]
+
+# ============================================================
+# Lappuses (pages) — "lpp." expands with correct plural noun
+# ============================================================
+LPP_CASES = [
+    ("58 lpp. gara grāmata",   "piecdesmit astoņas lappuses gara grāmata"),
+    ("1 lpp.",                 "viena lappuse"),
+    ("100 lpp.",               "simts lappuses"),
+]
+
 
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
@@ -164,4 +202,24 @@ def test_fractions(text, expected):
 
 @pytest.mark.parametrize("text,expected", ABBREVIATION_CASES)
 def test_abbreviations(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", DATE_CASES)
+def test_dates(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", INITIAL_CASES)
+def test_initials_not_roman(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", NR_CASES)
+def test_nr_keeps_digits(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", LPP_CASES)
+def test_lpp_plural(text, expected):
     assert convert(text) == expected

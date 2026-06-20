@@ -17,6 +17,18 @@ PATTERN = re.compile(
 
 LAT_WORD = re.compile(r'[A-Za-zĀāČčĒēĢģĪīĶķĻļŅņŌōŖŗŠšŪūŽžāēīūčšžģķļņŗ]+')
 
+# Matches "N lpp." to handle noun inflection together with the number
+_LPP_PAT = re.compile(r'(\d+)\s+lpp\.')
+
+# Single word preceding a Roman-numeral candidate (to detect surname initials)
+_WORD_BEFORE = re.compile(r'\w+\s+$')
+
+
+def _expand_lpp(m: re.Match) -> str:
+    n = int(m.group(1))
+    noun = "lappuse" if n == 1 else "lappuses"
+    return f"{cardinal(n, 2)} {noun}"
+
 
 def _next_word_bucket(text: str, pos: int) -> int:
     """Find next Latvian word after pos and return its bucket."""
@@ -38,6 +50,10 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 
 def convert(text: str, expand_abbr: bool = True) -> str:
+    # Handle "N lpp." before general abbreviation expansion so we can inflect both
+    # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
+    text = _LPP_PAT.sub(_expand_lpp, text)
+
     if expand_abbr:
         text = expand_abbreviations(text)
 
@@ -50,11 +66,17 @@ def convert(text: str, expand_abbr: bool = True) -> str:
             return ordinal(int(m.group(3)), bucket)
         elif m.group(4) is not None:  # roman ordinal
             s = m.group(4)
+            # Single uppercase letter after a word is likely a surname initial, not Roman
+            if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):
+                return m.group(0)
             if is_valid_roman(s):
                 return ordinal(roman_to_int(s), bucket)
             return m.group(0)
         elif m.group(5) is not None:  # roman cardinal
             s = m.group(5)
+            # Single uppercase letter after a word is likely a surname initial, not Roman
+            if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):
+                return m.group(0)
             if is_valid_roman(s):
                 return ordinal(roman_to_int(s), bucket)
             return m.group(0)
