@@ -85,7 +85,7 @@ CARDINAL_CASES = [
     ("3 kaķi",              "trīs kaķi"),               # nom masc pl
     ("21 diena",            "divdesmit viena diena"),   # nom fem sg
     ("100 grami",           "simts grami"),             # nom masc pl
-    ("Man ir 30",           "MAn ir trīsdesmit"),       # standalone, no following noun
+    ("Man ir 30",           "Man ir trīsdesmit"),        # standalone, no following noun
 ]
 
 # ============================================================
@@ -115,7 +115,7 @@ FRACTION_CASES = [
     ("21,5 grami",          "divdesmit viens komats pieci grami"),
     ("21.5 grami",          "divdesmit viens komats pieci grami"),
     ("3,14",                "trīs komats četrpadsmit"),
-    ("1,5 stundas",         "viens komats pieci stundas"),
+    ("1,5 stundas",         "viena komats piecas stundas"),
 ]
 
 # ============================================================
