@@ -23,6 +23,8 @@ ORDINAL_ENDINGS = {
     9: "ajiem",
     10: "os",
     11: "ajos",
+    12: "ajām",   # dat fem pl
+    13: "ajās",   # loc fem pl
 }
 
 

@@ -1,14 +1,15 @@
 ONES = {
-    0: {b: "nulle" for b in range(1, 12)},
-    1: {1:"viens", 2:"viena", 3:"vienas", 4:"vienam", 5:"vienai", 6:"vienu", 7:"vienā", 8:"vieni", 9:"vieniem", 10:"vienu", 11:"vienā"},
-    2: {1:"divi", 2:"divas", 3:"divas", 4:"diviem", 5:"divām", 6:"divu", 7:"divos", 8:"divi", 9:"diviem", 10:"divus", 11:"divos"},
-    3: {1:"trīs", 2:"trīs", 3:"triju", 4:"trim", 5:"trim", 6:"trīs", 7:"trijos", 8:"trīs", 9:"trim", 10:"trīs", 11:"trijos"},
-    4: {1:"četri", 2:"četras", 3:"četras", 4:"četriem", 5:"četrām", 6:"četrus", 7:"četros", 8:"četri", 9:"četriem", 10:"četrus", 11:"četros"},
-    5: {1:"pieci", 2:"piecas", 3:"piecu", 4:"pieciem", 5:"piecām", 6:"piecus", 7:"piecos", 8:"pieci", 9:"pieciem", 10:"piecus", 11:"piecos"},
-    6: {1:"seši", 2:"sešas", 3:"sešu", 4:"sešiem", 5:"sešām", 6:"sešus", 7:"sešos", 8:"seši", 9:"sešiem", 10:"sešus", 11:"sešos"},
-    7: {1:"septiņi", 2:"septiņas", 3:"septiņu", 4:"septiņiem", 5:"septiņām", 6:"septiņus", 7:"septiņos", 8:"septiņi", 9:"septiņiem", 10:"septiņus", 11:"septiņos"},
-    8: {1:"astoņi", 2:"astoņas", 3:"astoņu", 4:"astoņiem", 5:"astoņām", 6:"astoņus", 7:"astoņos", 8:"astoņi", 9:"astoņiem", 10:"astoņus", 11:"astoņos"},
-    9: {1:"deviņi", 2:"deviņas", 3:"deviņu", 4:"deviņiem", 5:"deviņām", 6:"deviņus", 7:"deviņos", 8:"deviņi", 9:"deviņiem", 10:"deviņus", 11:"deviņos"},
+    0: {b: "nulle" for b in range(1, 14)},
+    #      b1        b2        b3         b4          b5         b6       b7        b8        b9           b10       b11       b12        b13
+    1: {1:"viens",  2:"viena",  3:"vienas", 4:"vienam", 5:"vienai", 6:"vienu",  7:"vienā",  8:"vieni",  9:"vieniem", 10:"vienu",  11:"vienā",  12:"vienām",  13:"vienās"},
+    2: {1:"divi",   2:"divas",  3:"divas",  4:"diviem", 5:"divām",  6:"divu",   7:"divos",  8:"divi",   9:"diviem",  10:"divus",  11:"divos",  12:"divām",   13:"divās"},
+    3: {1:"trīs",   2:"trīs",   3:"triju",  4:"trim",   5:"trim",   6:"trīs",   7:"trijos", 8:"trīs",   9:"trim",    10:"trīs",   11:"trijos", 12:"trim",    13:"trijos"},
+    4: {1:"četri",  2:"četras", 3:"četru",  4:"četriem",5:"četrām", 6:"četru",  7:"četros", 8:"četri",  9:"četriem", 10:"četrus", 11:"četros", 12:"četrām",  13:"četrās"},
+    5: {1:"pieci",  2:"piecas", 3:"piecu",  4:"pieciem",5:"piecām", 6:"piecu",  7:"piecos", 8:"pieci",  9:"pieciem", 10:"piecus", 11:"piecos", 12:"piecām",  13:"piecās"},
+    6: {1:"seši",   2:"sešas",  3:"sešu",   4:"sešiem", 5:"sešām",  6:"sešu",   7:"sešos",  8:"seši",   9:"sešiem",  10:"sešus",  11:"sešos",  12:"sešām",   13:"sešās"},
+    7: {1:"septiņi",2:"septiņas",3:"septiņu",4:"septiņiem",5:"septiņām",6:"septiņu",7:"septiņos",8:"septiņi",9:"septiņiem",10:"septiņus",11:"septiņos",12:"septiņām",13:"septiņās"},
+    8: {1:"astoņi", 2:"astoņas",3:"astoņu", 4:"astoņiem",5:"astoņām",6:"astoņu", 7:"astoņos",8:"astoņi", 9:"astoņiem",10:"astoņus", 11:"astoņos", 12:"astoņām",  13:"astoņās"},
+    9: {1:"deviņi", 2:"deviņas",3:"deviņu", 4:"deviņiem",5:"deviņām",6:"deviņu", 7:"deviņos",8:"deviņi", 9:"deviņiem",10:"deviņus", 11:"deviņos", 12:"deviņām",  13:"deviņās"},
 }
 
 TEENS = [
