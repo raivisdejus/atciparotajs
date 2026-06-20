@@ -5,6 +5,7 @@ from atciparotajs.ordinals import ordinal
 from atciparotajs.fractions import fraction
 from atciparotajs.roman import roman_to_int, is_valid_roman
 from atciparotajs.abbreviations import expand_abbreviations
+from atciparotajs.time import clock_time
 
 # Groups: 1,2=decimal; 3=arabic ordinal; 4=roman ordinal; 5=roman cardinal; 6=arabic cardinal
 PATTERN = re.compile(
@@ -16,6 +17,9 @@ PATTERN = re.compile(
 )
 
 LAT_WORD = re.compile(r'[A-Za-zĀāČčĒēĢģĪīĶķĻļŅņŌōŖŗŠšŪūŽžāēīūčšžģķļņŗ]+')
+
+# Clock time "H:MM" must be expanded before the general pattern sees the digits
+_TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
 
 # Matches "N lpp." to handle noun inflection together with the number
 _LPP_PAT = re.compile(r'(\d+)\s+lpp\.')
@@ -50,6 +54,7 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 
 def convert(text: str, expand_abbr: bool = True) -> str:
+    text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)

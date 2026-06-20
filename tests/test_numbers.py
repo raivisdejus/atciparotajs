@@ -94,7 +94,7 @@ ORDINAL_CASES = [
     ("5. maijs",            "piektais maijs"),          # nom masc sg
     ("1. maijā",            "pirmajā maijā"),           # loc sg
     ("3. vieta",            "trešā vieta"),             # nom fem sg
-    ("2. vietā",            "otrajā vietā"),             # nom fem sg
+    ("2. vietā",            "otrajā vietā"),            # nom fem sg
     ("1. vieta",            "pirmā vieta"),             # nom fem sg
     ("21. vieta",           "divdesmit pirmā vieta"),   # nom fem sg
 ]
@@ -165,6 +165,15 @@ LPP_CASES = [
     ("100 lpp.",               "simts lappuses"),
 ]
 
+# ============================================================
+# Pulksteņa laiks (clock time) — "H:MM" format
+# ============================================================
+TIME_CASES = [
+    ("Vilciens pienāks 10:45",  "Vilciens pienāks desmitos četrdesmit piecās"),
+    ("Pulksten 1:00",           "Pulksten vienos"),
+    ("Sanāksme sākas 14:30",    "Sanāksme sākas divos trīsdesmit"),
+    ("9:05",                    "deviņos piecās"),
+]
 
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
@@ -223,4 +232,9 @@ def test_nr_keeps_digits(text, expected):
 
 @pytest.mark.parametrize("text,expected", LPP_CASES)
 def test_lpp_plural(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", TIME_CASES)
+def test_clock_time(text, expected):
     assert convert(text) == expected
