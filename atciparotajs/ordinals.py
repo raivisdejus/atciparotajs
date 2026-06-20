@@ -64,7 +64,7 @@ def ordinal(n: int, bucket: int = 1) -> str:
         if thousands == 1:
             thou_word = "tūkstoš"
         else:
-            thou_word = _below_thousand(thousands, 1) + " tūkstoš"
+            thou_word = _below_thousand(thousands, 1) + " tūkstoši"
         if remainder == 0:
             return _apply_ending(thou_word, bucket)
         else:

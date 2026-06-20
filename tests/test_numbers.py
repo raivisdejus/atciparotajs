@@ -127,7 +127,7 @@ ABBREVIATION_CASES = [
 ]
 
 # ============================================================
-# Datumi (dates) — memorable science milestones
+# Datumi (dates)
 # ============================================================
 DATE_CASES = [
     ("4. oktobris, 1957. gads",
@@ -136,6 +136,7 @@ DATE_CASES = [
      "tūkstoš deviņsimt sešdesmit pirmā gada divpadsmitais aprīlis"),
     ("1969. gada 20. jūlijā",
      "tūkstoš deviņsimt sešdesmit devītā gada divdesmitajā jūlijā"),
+    ("2026. gads", "divi tūkstoši divdesmit sestais gads"),
 ]
 
 # ============================================================
@@ -174,6 +175,16 @@ TIME_CASES = [
     ("Sanāksme sākas 14:30",    "Sanāksme sākas divos trīsdesmit"),
     ("9:05",                    "deviņos piecās"),
 ]
+
+# ============================================================
+# Negatīvi skaitļi (negative numbers)
+# ============================================================
+NEGATIVE_CASES = [
+    ("-5 grādi",         "mīnus pieci grādi"),
+    ("-10,5 grādi",      "mīnus desmit komats pieci grādi"),
+    ("-1 grāds",         "mīnus viens grāds"),
+]
+
 
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
@@ -237,4 +248,9 @@ def test_lpp_plural(text, expected):
 
 @pytest.mark.parametrize("text,expected", TIME_CASES)
 def test_clock_time(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", NEGATIVE_CASES)
+def test_negative_numbers(text, expected):
     assert convert(text) == expected

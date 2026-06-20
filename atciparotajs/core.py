@@ -24,6 +24,9 @@ _TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
 # Matches "N lpp." to handle noun inflection together with the number
 _LPP_PAT = re.compile(r'(\d+)\s+lpp\.')
 
+# Negative numbers: "-N" at word boundary, not preceded by a digit (avoid ranges like "5-6")
+_NEG_PAT = re.compile(r'(?<!\d)-(\d+(?:[.,]\d+)?)')
+
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
 
@@ -55,6 +58,7 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 def convert(text: str, expand_abbr: bool = True) -> str:
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
+    text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)
