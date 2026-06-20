@@ -94,6 +94,7 @@ ORDINAL_CASES = [
     ("5. maijs",            "piektais maijs"),          # nom masc sg
     ("1. maijā",            "pirmajā maijā"),           # loc sg
     ("3. vieta",            "trešā vieta"),             # nom fem sg
+    ("2. vietā",            "otrajā vietā"),             # nom fem sg
     ("1. vieta",            "pirmā vieta"),             # nom fem sg
     ("21. vieta",           "divdesmit pirmā vieta"),   # nom fem sg
 ]
