@@ -1,0 +1,100 @@
+ONES = {
+    0: {b: "nulle" for b in range(1, 12)},
+    1: {1:"viens", 2:"viena", 3:"vienas", 4:"vienam", 5:"vienai", 6:"vienu", 7:"vienā", 8:"vieni", 9:"vieniem", 10:"vienu", 11:"vienā"},
+    2: {1:"divi", 2:"divas", 3:"divas", 4:"diviem", 5:"divām", 6:"divu", 7:"divos", 8:"divi", 9:"diviem", 10:"divus", 11:"divos"},
+    3: {1:"trīs", 2:"trīs", 3:"triju", 4:"trim", 5:"trim", 6:"trīs", 7:"trijos", 8:"trīs", 9:"trim", 10:"trīs", 11:"trijos"},
+    4: {1:"četri", 2:"četras", 3:"četras", 4:"četriem", 5:"četrām", 6:"četrus", 7:"četros", 8:"četri", 9:"četriem", 10:"četrus", 11:"četros"},
+    5: {1:"pieci", 2:"piecas", 3:"piecu", 4:"pieciem", 5:"piecām", 6:"piecus", 7:"piecos", 8:"pieci", 9:"pieciem", 10:"piecus", 11:"piecos"},
+    6: {1:"seši", 2:"sešas", 3:"sešu", 4:"sešiem", 5:"sešām", 6:"sešus", 7:"sešos", 8:"seši", 9:"sešiem", 10:"sešus", 11:"sešos"},
+    7: {1:"septiņi", 2:"septiņas", 3:"septiņu", 4:"septiņiem", 5:"septiņām", 6:"septiņus", 7:"septiņos", 8:"septiņi", 9:"septiņiem", 10:"septiņus", 11:"septiņos"},
+    8: {1:"astoņi", 2:"astoņas", 3:"astoņu", 4:"astoņiem", 5:"astoņām", 6:"astoņus", 7:"astoņos", 8:"astoņi", 9:"astoņiem", 10:"astoņus", 11:"astoņos"},
+    9: {1:"deviņi", 2:"deviņas", 3:"deviņu", 4:"deviņiem", 5:"deviņām", 6:"deviņus", 7:"deviņos", 8:"deviņi", 9:"deviņiem", 10:"deviņus", 11:"deviņos"},
+}
+
+TEENS = [
+    "desmit", "vienpadsmit", "divpadsmit", "trīspadsmit", "četrpadsmit",
+    "piecpadsmit", "sešpadsmit", "septiņpadsmit", "astoņpadsmit", "deviņpadsmit"
+]
+
+TENS_PREFIX = [
+    "", "", "divdesmit", "trīsdesmit", "četrdesmit", "piecdesmit",
+    "sešdesmit", "septiņdesmit", "astoņdesmit", "deviņdesmit"
+]
+
+HUNDREDS_PREFIX = [
+    "", "", "divsimt", "trīssimt", "četrsimt", "piecsimt",
+    "sešsimt", "septiņsimt", "astoņsimt", "deviņsimt"
+]
+
+SIMTS_FORMS = {1:"simts", 2:"simtu", 3:"simtu", 4:"simtam", 5:"simtai", 6:"simtu", 7:"simtā", 8:"simti", 9:"simtiem", 10:"simtus", 11:"simtos"}
+TUKSTOTIS_FORMS = {1:"tūkstotis", 2:"tūkstoša", 3:"tūkstošu", 4:"tūkstotim", 5:"tūkstotim", 6:"tūkstoti", 7:"tūkstotī", 8:"tūkstoši", 9:"tūkstošiem", 10:"tūkstošus", 11:"tūkstošos"}
+
+
+def _ones(n: int, bucket: int) -> str:
+    return ONES[n][bucket]
+
+
+def _teens(n: int) -> str:
+    # n is 10..19
+    return TEENS[n - 10]
+
+
+def _below_hundred(n: int, bucket: int) -> str:
+    """Spell 1-99 with given bucket on last component."""
+    if n == 0:
+        return ""
+    if 1 <= n <= 9:
+        return _ones(n, bucket)
+    if 10 <= n <= 19:
+        return _teens(n)
+    tens = n // 10
+    units = n % 10
+    if units == 0:
+        return TENS_PREFIX[tens]
+    else:
+        return TENS_PREFIX[tens] + " " + _ones(units, bucket)
+
+
+def _below_thousand(n: int, bucket: int) -> str:
+    """Spell 1-999 with given bucket on last component."""
+    if n == 0:
+        return ""
+    hundreds = n // 100
+    remainder = n % 100
+    if hundreds == 0:
+        return _below_hundred(n, bucket)
+    if remainder == 0:
+        # Round hundreds — always use nominative "simts" form, not inflected
+        if hundreds == 1:
+            return "simts"
+        else:
+            return HUNDREDS_PREFIX[hundreds]
+    else:
+        if hundreds == 1:
+            return "simts " + _below_hundred(remainder, bucket)
+        else:
+            return HUNDREDS_PREFIX[hundreds] + " " + _below_hundred(remainder, bucket)
+
+
+def cardinal(n: int, bucket: int = 1) -> str:
+    """Spell integer n (0-999999) in Latvian with given bucket."""
+    if n == 0:
+        return ONES[0][bucket]
+    thousands = n // 1000
+    remainder = n % 1000
+    if thousands == 0:
+        return _below_thousand(n, bucket)
+    # Thousands part
+    if remainder == 0:
+        if thousands == 1:
+            return TUKSTOTIS_FORMS[bucket]
+        else:
+            thou_word = _below_thousand(thousands, 1)
+            return thou_word + " tūkstoši"
+    else:
+        if thousands == 1:
+            thou_word = "tūkstotis"
+        else:
+            thou_word = _below_thousand(thousands, 1) + " tūkstoši"
+        rem_word = _below_thousand(remainder, bucket)
+        return thou_word + " " + rem_word
