@@ -91,6 +91,31 @@ _PCT_PREPS = {
 _WORD_BEFORE = re.compile(r'\w+\s+$')
 
 # Currency patterns — amount with symbol or ISO code
+# Tonne: "53T" or "53 T" → "piecdesmit trīs tonnas" (feminine)
+_TONNE_PAT = re.compile(r'(\d+)\s*T(?=\s|$|[,.])')
+
+# Temperature: "36°C", "100°F", "90°"
+_TEMP_PAT = re.compile(r'(\d+)°[CF]?(?=\s|$|[,.])')
+
+# Vulgar fractions: "3/4", "1/2"; mixed: "2 1/4"
+_FRACTION_DENOM = {
+    2:   ("puse",        "puses",        "pušu"),
+    3:   ("trešdaļa",   "trešdaļas",   "trešdaļu"),
+    4:   ("ceturtdaļa", "ceturtdaļas", "ceturtdaļu"),
+    5:   ("piektdaļa",  "piektdaļas",  "piektdaļu"),
+    6:   ("sestdaļa",   "sestdaļas",   "sestdaļu"),
+    7:   ("septītdaļa", "septītdaļas", "septītdaļu"),
+    8:   ("astotdaļa",  "astotdaļas",  "astotdaļu"),
+    9:   ("devītdaļa",  "devītdaļas",  "devītdaļu"),
+    10:  ("desmitdaļa", "desmitdaļas", "desmitdaļu"),
+    100: ("simtdaļa",   "simtdaļas",   "simtdaļu"),
+}
+_MIXED_FRAC_PAT = re.compile(r'(\d+)\s+(\d+)/(\d+)')
+_SIMPLE_FRAC_PAT = re.compile(r'(\d+)/(\d+)')
+
+# Class notation: "4.D klase", "4.d klasei"
+_CLASS_PAT = re.compile(r'(\d+)\.([A-Za-z])\s+((?:klase|klaš)\w*)', re.IGNORECASE)
+
 _CURRENCY_SYMBOL_MAP = {'€': 'EUR', '$': 'USD', '£': 'GBP'}
 _CUR_CODES_RE = '|'.join(re.escape(c) for c in sorted(CURRENCY_FORMS, key=len, reverse=True))
 _CUR_AMT = r'(\d+)(?:[,.](\d{1,2}))?'
@@ -169,6 +194,68 @@ def _prev_word(text: str, start: int) -> str | None:
     return m.group(0)[::-1]
 
 
+def _expand_temp(m: re.Match) -> str:
+    n = int(m.group(1))
+    if n == 0:
+        return "nulle grādu"
+    last2 = n % 100
+    last1 = n % 10
+    if last1 == 1 and last2 != 11:
+        return f"{cardinal(n, 1)} grāds"
+    return f"{cardinal(n, 8)} grādi"
+
+
+def _expand_tonne(m: re.Match) -> str:
+    n = int(m.group(1))
+    last2 = n % 100
+    last1 = n % 10
+    if last1 == 1 and last2 != 11:
+        return f"{cardinal(n, 2)} tonna"
+    elif 2 <= last1 <= 9 and not (10 <= last2 <= 19):
+        return f"{cardinal(n, 3)} tonnas"
+    else:
+        return f"{cardinal(n, 6)} tonnu"
+
+
+def _expand_vulgar_fraction(num: int, denom: int) -> str:
+    if denom not in _FRACTION_DENOM:
+        return f"{num}/{denom}"
+    nom_sg, nom_pl, gen_pl = _FRACTION_DENOM[denom]
+    last2 = num % 100
+    last1 = num % 10
+    if last1 == 1 and last2 != 11:
+        return f"{cardinal(num, 2)} {nom_sg}"
+    elif 2 <= last1 <= 9 and not (10 <= last2 <= 19):
+        return f"{cardinal(num, 3)} {nom_pl}"
+    else:
+        return f"{cardinal(num, 6)} {gen_pl}"
+
+
+def _expand_mixed_fraction(m: re.Match) -> str:
+    integer = int(m.group(1))
+    num = int(m.group(2))
+    denom = int(m.group(3))
+    if denom not in _FRACTION_DENOM:
+        return m.group(0)
+    last2 = integer % 100
+    last1 = integer % 10
+    if last1 == 1 and last2 != 11:
+        int_words = f"{cardinal(integer, 1)} vesels"
+    elif 2 <= last1 <= 9 and not (10 <= last2 <= 19):
+        int_words = f"{cardinal(integer, 8)} veseli"
+    else:
+        int_words = f"{cardinal(integer, 6)} veselu"
+    return f"{int_words} {_expand_vulgar_fraction(num, denom)}"
+
+
+def _expand_class(m: re.Match) -> str:
+    n = int(m.group(1))
+    letter = m.group(2).lower()
+    klase = m.group(3)
+    bucket = detect_bucket(klase)
+    return f"{ordinal(n, bucket)} {letter} {klase}"
+
+
 def _bucket_from_prev(word: str) -> int | None:
     """Return a case bucket override based on the word preceding the percentage, or None."""
     w = word.lower()
@@ -240,7 +327,7 @@ def _next_word_bucket(text: str, pos: int) -> int:
     return bucket
 
 
-def convert(text: str, expand_abbr: bool = True) -> str:
+def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
     # Collapse space-separated thousands ("150 000" → "150000") before any numeric processing
     text = _SPACE_THOU_PAT.sub(lambda m: m.group(0).replace(" ", "").replace(" ", ""), text)
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
@@ -281,6 +368,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     text = _SUPER_PAT.sub(_expand_super_unit, text)
     # Handle unit abbreviations (km, m, kg) before general abbreviation expansion
     text = _UNIT_PAT.sub(_expand_unit, text)
+    # Handle tonnes (feminine) — "53T" or "53 T"
+    text = _TONNE_PAT.sub(_expand_tonne, text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)
@@ -307,6 +396,14 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     if expand_abbr:
         text = expand_abbreviations(text)
 
+    # Class notation "4.D klase" before general pattern (prevents D → roman 500)
+    text = _CLASS_PAT.sub(_expand_class, text)
+    # Mixed fractions "2 1/4" before simple "3/4" and before general pattern
+    text = _MIXED_FRAC_PAT.sub(_expand_mixed_fraction, text)
+    text = _SIMPLE_FRAC_PAT.sub(lambda m: _expand_vulgar_fraction(int(m.group(1)), int(m.group(2))), text)
+    # Temperature "36°C", "90°"
+    text = _TEMP_PAT.sub(_expand_temp, text)
+
     def replace(m):
         bucket = _next_word_bucket(text, m.end())
 
@@ -315,6 +412,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
         elif m.group(3) is not None:  # arabic ordinal
             return ordinal(int(m.group(3)), bucket)
         elif m.group(4) is not None:  # roman ordinal
+            if no_roman:
+                return m.group(0)
             s = m.group(4)
             # Single uppercase letter after a word is likely a surname initial, not Roman
             if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):
@@ -323,6 +422,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
                 return ordinal(roman_to_int(s), bucket)
             return m.group(0)
         elif m.group(5) is not None:  # roman cardinal
+            if no_roman:
+                return m.group(0)
             s = m.group(5)
             # Single uppercase letter after a word is likely a surname initial, not Roman
             if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):

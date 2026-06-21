@@ -368,3 +368,57 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 |-------|----------|--------|
 | `Tas notika 1945. gadā` | `Tas notika tūkstoš deviņsimt četrdesmit piektajā gadā` | ✅ |
 | `2024. gada 1. janvārī` | `divi tūkstoši divdesmit ceturtā gada pirmajā janvārī` | ✅ |
+
+## Temperature
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `36°C` | `trīsdesmit seši grādi` | ✅ |
+| `100°F` | `simts grādi` | ✅ |
+| `90°` | `deviņdesmit grādi` | ✅ |
+| `1°C` | `viens grāds` | ✅ |
+| `21°` | `divdesmit viens grāds` | ✅ |
+| `11°C` | `vienpadsmit grādi` | ✅ |
+| `0°` | `nulle grādu` | ✅ |
+| `2°` | `divi grādi` | ✅ |
+
+## Tonnes
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `53T` | `piecdesmit trīs tonnas` | ✅ |
+| `1T` | `viena tonna` | ✅ |
+| `10T` | `desmit tonnu` | ✅ |
+| `21T` | `divdesmit viena tonna` | ✅ |
+| `5 T` | `piecas tonnas` | ✅ |
+| `11T` | `vienpadsmit tonnu` | ✅ |
+
+## Vulgar Fractions
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `3/4` | `trīs ceturtdaļas` | ✅ |
+| `1/2` | `viena puse` | ✅ |
+| `9/10` | `deviņas desmitdaļas` | ✅ |
+| `2 1/4` | `divi veseli viena ceturtdaļa` | ✅ |
+| `1 1/2` | `viens vesels viena puse` | ✅ |
+| `1/3` | `viena trešdaļa` | ✅ |
+| `2/3` | `divas trešdaļas` | ✅ |
+| `5/8` | `piecas astotdaļas` | ✅ |
+
+## No Roman
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `II pasaules karš` | `II pasaules karš` | ✅ |
+| `V nodaļa` | `V nodaļa` | ✅ |
+| `XIV gs.` | `XIV gadsimts` | ✅ |
+
+## Class Notation
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `4.D klase` | `ceturtā d klase` | ✅ |
+| `4.d klasei` | `ceturtajai d klasei` | ✅ |
+| `1.A klase` | `pirmā a klase` | ✅ |
+| `10.B klase` | `desmitā b klase` | ✅ |

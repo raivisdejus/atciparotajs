@@ -422,6 +422,50 @@ CURRENCY_FLOAT_CASES = [
     (2.99,   'LVL', "divi lati un deviņdesmit deviņi santīmi"),
 ]
 
+TEMPERATURE_CASES = [
+    ("36°C",    "trīsdesmit seši grādi"),
+    ("100°F",   "simts grādi"),
+    ("90°",     "deviņdesmit grādi"),
+    ("1°C",     "viens grāds"),
+    ("21°",     "divdesmit viens grāds"),
+    ("11°C",    "vienpadsmit grādi"),
+    ("0°",      "nulle grādu"),
+    ("2°",      "divi grādi"),
+]
+
+TONNE_CASES = [
+    ("53T",     "piecdesmit trīs tonnas"),
+    ("1T",      "viena tonna"),
+    ("10T",     "desmit tonnu"),
+    ("21T",     "divdesmit viena tonna"),
+    ("5 T",     "piecas tonnas"),
+    ("11T",     "vienpadsmit tonnu"),
+]
+
+VULGAR_FRACTION_CASES = [
+    ("3/4",     "trīs ceturtdaļas"),
+    ("1/2",     "viena puse"),
+    ("9/10",    "deviņas desmitdaļas"),
+    ("2 1/4",   "divi veseli viena ceturtdaļa"),
+    ("1 1/2",   "viens vesels viena puse"),
+    ("1/3",     "viena trešdaļa"),
+    ("2/3",     "divas trešdaļas"),
+    ("5/8",     "piecas astotdaļas"),
+]
+
+NO_ROMAN_CASES = [
+    ("II pasaules karš",  "II pasaules karš"),
+    ("V nodaļa",          "V nodaļa"),
+    ("XIV gs.",           "XIV gadsimts"),
+]
+
+CLASS_CASES = [
+    ("4.D klase",    "ceturtā d klase"),
+    ("4.d klasei",   "ceturtajai d klasei"),
+    ("1.A klase",    "pirmā a klase"),
+    ("10.B klase",   "desmitā b klase"),
+]
+
 CURRENCY_CONVERT_CASES = [
     # Symbol after (no space)
     ("1,82€",           "viens eiro un astoņdesmit divi centi"),
@@ -590,4 +634,29 @@ def test_decades(text, expected):
 
 @pytest.mark.parametrize("text,expected", DATE_SENTENCE_CASES)
 def test_date_sentences(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", TEMPERATURE_CASES)
+def test_temperature(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", TONNE_CASES)
+def test_tonnes(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", VULGAR_FRACTION_CASES)
+def test_vulgar_fractions(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", NO_ROMAN_CASES)
+def test_no_roman(text, expected):
+    assert convert(text, no_roman=True) == expected
+
+
+@pytest.mark.parametrize("text,expected", CLASS_CASES)
+def test_class_notation(text, expected):
     assert convert(text) == expected
