@@ -95,6 +95,8 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `1961. gada 12. aprīlis` | `tūkstoš deviņsimt sešdesmit pirmā gada divpadsmitais aprīlis` | ✅ |
 | `1969. gada 20. jūlijā` | `tūkstoš deviņsimt sešdesmit devītā gada divdesmitajā jūlijā` | ✅ |
 | `2026. gads` | `divi tūkstoši divdesmit sestais gads` | ✅ |
+| `1941.–1945. gads` | `tūkstoš deviņsimt četrdesmit pirmais līdz tūkstoš deviņsimt četrdesmit piektais gads` | ✅ |
+| `1941.–1945. gadā` | `tūkstoš deviņsimt četrdesmit pirmajā līdz tūkstoš deviņsimt četrdesmit piektajā gadā` | ✅ |
 
 ## Initials Not Roman
 

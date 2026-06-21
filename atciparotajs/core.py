@@ -24,6 +24,9 @@ _TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
 # Sports score "N:M" — single-digit second operand means it's not a clock time
 _SCORE_PAT = re.compile(r'\b(\d+):(\d+)\b')
 
+# Ordinal year range "N.–M." (e.g. "1941.–1945. gads")
+_ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-](\d+)\.(?=\s|$)')
+
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
 _RANGE_PAT = re.compile(r'\b(\d+)[–\-](\d+)\b')
 
@@ -123,6 +126,11 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 def convert(text: str, expand_abbr: bool = True) -> str:
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
+    # Ordinal ranges like "1941.–1945. gads" must run before general range/ordinal patterns
+    def _expand_ord_range(m: re.Match) -> str:
+        bucket = _next_word_bucket(text, m.end())
+        return f"{ordinal(int(m.group(1)), bucket)} līdz {ordinal(int(m.group(2)), bucket)}"
+    text = _ORD_RANGE_PAT.sub(_expand_ord_range, text)
     # Scores must run after time (so clock patterns are already consumed)
     text = _SCORE_PAT.sub(
         lambda m: f"{cardinal(int(m.group(1)), 1)} {cardinal(int(m.group(2)), 1)}", text
