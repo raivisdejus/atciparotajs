@@ -373,7 +373,8 @@ CURRENCY_CONVERT_CASES = [
     # Single-digit fractional part (e.g. 1,8 → 80 cents)
     ("1,8€",            "viens eiro un astoņdesmit centu"),
     # Embedded in sentence
-    ("Prece maksā 2,50 EUR.", "Prece maksā divi eiro un piecdesmit centu."),
+    ("Prece maksā 2,50 EUR.", "Prece maksā divus eiro un piecdesmit centu."),
+    ("Salāti maksā 1.83EUR", "Salāti maksā vienu eiro un astoņdesmit trīs centus"),
 ]
 
 

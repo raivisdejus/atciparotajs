@@ -43,16 +43,36 @@ def _noun_gender(word: str) -> str:
     return 'm'
 
 
-def _pick_form(n: int, forms: tuple) -> tuple[str, int]:
+def _acc_pl(nom_pl: str) -> str:
+    """Derive accusative plural from nominative plural (masculine: -i → -us; feminine: unchanged)."""
+    if nom_pl.endswith('i'):
+        return nom_pl[:-1] + 'us'
+    return nom_pl
+
+
+def _pick_form(n: int, forms: tuple, accusative: bool = False) -> tuple[str, int]:
     """Return (noun_form, cardinal_bucket) for integer n."""
     last2 = n % 100
     last1 = n % 10
     if last1 == 1 and last2 != 11:
-        noun = forms[0]
-        bucket = 2 if _noun_gender(noun) == 'f' else 1
+        if accusative:
+            # acc sg: for 1st-decl masc and all fem, gen_pl == acc_sg; bucket 6 = "vienu"
+            noun = forms[2]
+            bucket = 6
+        else:
+            noun = forms[0]
+            bucket = 2 if _noun_gender(noun) == 'f' else 1
     elif 2 <= last1 <= 9 and not (10 <= last2 <= 19):
-        noun = forms[1]
-        bucket = 3 if _noun_gender(forms[0]) == 'f' else 8
+        if accusative:
+            if _noun_gender(forms[0]) == 'f':
+                noun = forms[1]   # fem acc pl = nom pl
+                bucket = 3
+            else:
+                noun = _acc_pl(forms[1])   # masc acc pl: replace -i with -us
+                bucket = 10
+        else:
+            noun = forms[1]
+            bucket = 3 if _noun_gender(forms[0]) == 'f' else 8
     else:
         noun = forms[2]
         bucket = 6
@@ -64,6 +84,7 @@ def currency(
     currency_code: str = 'EUR',
     adjective: bool = False,
     separator: str = 'un',
+    accusative: bool = False,
 ) -> str:
     """Spell a monetary amount in Latvian.
 
@@ -85,7 +106,7 @@ def currency(
     major_forms, minor_forms = CURRENCY_FORMS[code]
     adj = CURRENCY_ADJECTIVES.get(code, '')
 
-    major_noun, major_bucket = _pick_form(major, major_forms)
+    major_noun, major_bucket = _pick_form(major, major_forms, accusative)
     if adjective and adj:
         major_str = cardinal(major, major_bucket) + ' ' + adj + ' ' + major_noun
     else:
@@ -94,7 +115,7 @@ def currency(
     if minor == 0:
         return major_str
 
-    minor_noun, minor_bucket = _pick_form(minor, minor_forms)
+    minor_noun, minor_bucket = _pick_form(minor, minor_forms, accusative)
     minor_str = cardinal(minor, minor_bucket) + ' ' + minor_noun
 
     return f"{major_str} {separator} {minor_str}"

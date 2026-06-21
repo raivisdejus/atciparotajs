@@ -100,8 +100,8 @@ _CUR_SYM_BEFORE = re.compile(r'([€$£])\s*' + _CUR_AMT)
 _CUR_SYM_AFTER = re.compile(_CUR_AMT + r'\s*([€$£])')
 # Code before: EUR 1,82
 _CUR_CODE_BEFORE = re.compile(r'\b(' + _CUR_CODES_RE + r')\s+' + _CUR_AMT, re.IGNORECASE)
-# Code after: 1,82 EUR
-_CUR_CODE_AFTER = re.compile(_CUR_AMT + r'\s+(' + _CUR_CODES_RE + r')\b', re.IGNORECASE)
+# Code after: 1,82 EUR  or  1.82EUR (no space)
+_CUR_CODE_AFTER = re.compile(_CUR_AMT + r'\s*(' + _CUR_CODES_RE + r')\b', re.IGNORECASE)
 
 
 def _parse_cur_amount(int_str: str, dec_str: str | None) -> tuple[int, int]:
@@ -115,8 +115,9 @@ def _parse_cur_amount(int_str: str, dec_str: str | None) -> tuple[int, int]:
     return major, minor
 
 
-def _expand_cur(major: int, minor: int, code: str) -> str:
-    return _currency((major, minor), code.upper())
+def _expand_cur(major: int, minor: int, code: str, prev: str | None = None) -> str:
+    accusative = prev is not None and detect_bucket(prev) in (2, 7)
+    return _currency((major, minor), code.upper(), accusative=accusative)
 
 
 def _expand_super_unit(m: re.Match) -> str:
@@ -280,15 +281,19 @@ def convert(text: str, expand_abbr: bool = True) -> str:
 
     # Currency amounts must expand before phones and abbreviations
     text = _CUR_CODE_BEFORE.sub(
-        lambda m: _expand_cur(*_parse_cur_amount(m.group(2), m.group(3)), m.group(1)), text)
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(2), m.group(3)), m.group(1),
+                              _prev_word(text, m.start())), text)
     text = _CUR_CODE_AFTER.sub(
-        lambda m: _expand_cur(*_parse_cur_amount(m.group(1), m.group(2)), m.group(3)), text)
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(1), m.group(2)), m.group(3),
+                              _prev_word(text, m.start())), text)
     text = _CUR_SYM_BEFORE.sub(
         lambda m: _expand_cur(*_parse_cur_amount(m.group(2), m.group(3)),
-                              _CURRENCY_SYMBOL_MAP[m.group(1)]), text)
+                              _CURRENCY_SYMBOL_MAP[m.group(1)],
+                              _prev_word(text, m.start())), text)
     text = _CUR_SYM_AFTER.sub(
         lambda m: _expand_cur(*_parse_cur_amount(m.group(1), m.group(2)),
-                              _CURRENCY_SYMBOL_MAP[m.group(3)]), text)
+                              _CURRENCY_SYMBOL_MAP[m.group(3)],
+                              _prev_word(text, m.start())), text)
 
     # Phone numbers must expand before abbreviations to prevent "tel." → "litrs"
     text = expand_phones(text)

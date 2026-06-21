@@ -294,4 +294,5 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `1.82€` | `viens eiro un astoņdesmit divi centi` | ✅ |
 | `EUR 1.82` | `viens eiro un astoņdesmit divi centi` | ✅ |
 | `1,8€` | `viens eiro un astoņdesmit centu` | ✅ |
-| `Prece maksā 2,50 EUR.` | `Prece maksā divi eiro un piecdesmit centu.` | ✅ |
+| `Prece maksā 2,50 EUR.` | `Prece maksā divus eiro un piecdesmit centu.` | ✅ |
+| `Salāti maksā 1.83EUR` | `Salāti maksā vienu eiro un astoņdesmit trīs centus` | ✅ |
