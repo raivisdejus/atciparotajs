@@ -57,6 +57,16 @@ _UNIT_MAP = {
 _UNIT_ABBR_RE = "|".join(re.escape(k) for k in sorted(_UNIT_MAP, key=len, reverse=True))
 _UNIT_PAT = re.compile(rf'(\d+)\s+({_UNIT_ABBR_RE})(?=\s|$|[,.])')
 
+# Superscript units: km², m², m³, km³
+_SUPER_UNIT_MAP = {
+    "km²": ("kvadrātkilometrs", "kvadrātkilometri", "kvadrātkilometru"),
+    "km³": ("kubikkilometrs",   "kubikkilometri",   "kubikkilometru"),
+    "m²":  ("kvadrātmetrs",     "kvadrātmetri",     "kvadrātmetru"),
+    "m³":  ("kubikmetrs",       "kubikmetri",       "kubikmetru"),
+}
+_SUPER_ABBR_RE = "|".join(re.escape(k) for k in sorted(_SUPER_UNIT_MAP, key=len, reverse=True))
+_SUPER_PAT = re.compile(rf'(\d+)\s+({_SUPER_ABBR_RE})(?=\s|$|[,.])')
+
 # Negative numbers: "-N" at word boundary, not preceded by a digit (avoid ranges like "5-6")
 _NEG_PAT = re.compile(r'(?<!\d)-(\d+(?:[.,]\d+)?)')
 
@@ -78,6 +88,20 @@ _PCT_PREPS = {
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
+
+
+def _expand_super_unit(m: re.Match) -> str:
+    n = int(m.group(1))
+    nom_sg, nom_pl, gen_pl = _SUPER_UNIT_MAP[m.group(2)]
+    last2 = n % 100
+    last1 = n % 10
+    if n == 1:
+        noun, bucket = nom_sg, 1
+    elif 10 <= last2 <= 19 or last1 == 0:
+        noun, bucket = gen_pl, 6
+    else:
+        noun, bucket = nom_pl, 8
+    return f"{cardinal(n, bucket)} {noun}"
 
 
 def _expand_unit(m: re.Match) -> str:
@@ -217,6 +241,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     text = _RANGE_PAT.sub(_expand_range, text)
     text = _PCT_PAT.sub(lambda m: _expand_pct(m, text), text)
     text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
+    # Handle superscript units (km², m², m³) before plain unit abbreviations
+    text = _SUPER_PAT.sub(_expand_super_unit, text)
     # Handle unit abbreviations (km, m, kg) before general abbreviation expansion
     text = _UNIT_PAT.sub(_expand_unit, text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both

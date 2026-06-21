@@ -89,6 +89,15 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `15 km dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
 | `15 km. dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
 | `600 mm mortīra` | `sešsimt milimetru mortīra` | ✅ |
+| `9 km²` | `deviņi kvadrātkilometri` | ✅ |
+| `1 km²` | `viens kvadrātkilometrs` | ✅ |
+| `10 km²` | `desmit kvadrātkilometru` | ✅ |
+| `5 m²` | `pieci kvadrātmetri` | ✅ |
+| `1 m²` | `viens kvadrātmetrs` | ✅ |
+| `100 m²` | `simts kvadrātmetru` | ✅ |
+| `3 m³` | `trīs kubikmetri` | ✅ |
+| `1 m³` | `viens kubikmetrs` | ✅ |
+| `20 m³` | `divdesmit kubikmetru` | ✅ |
 
 ## Dates
 
