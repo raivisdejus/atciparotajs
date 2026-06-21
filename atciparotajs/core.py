@@ -21,11 +21,20 @@ LAT_WORD = re.compile(r'[A-Za-zĀāČčĒēĢģĪīĶķĻļŅņŌōŖŗŠšŪū�
 # Clock time "H:MM" must be expanded before the general pattern sees the digits
 _TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
 
+# Sports score "N:M" — single-digit second operand means it's not a clock time
+_SCORE_PAT = re.compile(r'\b(\d+):(\d+)\b')
+
+# Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
+_RANGE_PAT = re.compile(r'\b(\d+)[–\-](\d+)\b')
+
 # Matches "N lpp." to handle noun inflection together with the number
 _LPP_PAT = re.compile(r'(\d+)\s+lpp\.')
 
 # Negative numbers: "-N" at word boundary, not preceded by a digit (avoid ranges like "5-6")
 _NEG_PAT = re.compile(r'(?<!\d)-(\d+(?:[.,]\d+)?)')
+
+# Percentage: integer or decimal followed by %
+_PCT_PAT = re.compile(r'(\d+(?:[.,]\d+)?)\s*%')
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
@@ -35,6 +44,22 @@ def _expand_lpp(m: re.Match) -> str:
     n = int(m.group(1))
     noun = "lappuse" if n == 1 else "lappuses"
     return f"{cardinal(n, 2)} {noun}"
+
+
+def _expand_pct(m: re.Match) -> str:
+    raw = m.group(1)
+    if ',' in raw or '.' in raw:
+        sep = ',' if ',' in raw else '.'
+        int_part, dec_part = raw.split(sep, 1)
+        return fraction(int(int_part), dec_part, 8) + " procenti"
+    n = int(raw)
+    last2 = n % 100
+    last1 = n % 10
+    if 10 <= last2 <= 19 or last1 == 0:
+        return cardinal(n, 6) + " procentu"
+    if last1 == 1:
+        return cardinal(n, 1) + " procents"
+    return cardinal(n, 8) + " procenti"
 
 
 def _next_word_bucket(text: str, pos: int) -> int:
@@ -58,6 +83,16 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 def convert(text: str, expand_abbr: bool = True) -> str:
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
+    # Scores must run after time (so clock patterns are already consumed)
+    text = _SCORE_PAT.sub(
+        lambda m: f"{cardinal(int(m.group(1)), 1)} {cardinal(int(m.group(2)), 1)}", text
+    )
+    # Ranges: use the following noun's bucket for both numbers
+    def _expand_range(m: re.Match) -> str:
+        bucket = _next_word_bucket(text, m.end())
+        return f"{cardinal(int(m.group(1)), bucket)} līdz {cardinal(int(m.group(2)), bucket)}"
+    text = _RANGE_PAT.sub(_expand_range, text)
+    text = _PCT_PAT.sub(_expand_pct, text)
     text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")

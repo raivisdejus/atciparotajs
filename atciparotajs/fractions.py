@@ -11,5 +11,5 @@ def fraction(integer_part: int, decimal_str: str, bucket: int = 1) -> str:
     """
     gender_bucket = 2 if bucket in _FEMININE_BUCKETS else 1
     dec_int = int(decimal_str)
-    parts = [cardinal(integer_part, gender_bucket), "komats", cardinal(dec_int, gender_bucket)]
+    parts = [cardinal(integer_part, gender_bucket), "komats", cardinal(dec_int, bucket)]
     return " ".join(parts)

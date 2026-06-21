@@ -185,6 +185,47 @@ NEGATIVE_CASES = [
     ("-1 grāds",         "mīnus viens grāds"),
 ]
 
+# ============================================================
+# Lieli skaitļi (large numbers — thousands)
+# ============================================================
+LARGE_NUMBER_CASES = [
+    ("1000 cilvēku",        "tūkstoš cilvēku"),
+    ("3000 gadu",           "trīstūkstoš gadu"),
+    ("5000 gadus",          "piectūkstoš gadus"),
+    ("10000 cilvēku",       "desmit tūkstoši cilvēku"),
+]
+
+# ============================================================
+# Procenti (percentages)
+# ============================================================
+PERCENTAGE_CASES = [
+    ("5%",                  "pieci procenti"),
+    ("21%",                 "divdesmit viens procents"),
+    ("100%",                "simts procentu"),
+    ("0,5%",                "nulle komats pieci procenti"),
+    ("Inflācija sasniedza 3,5 procentus",
+     "Inflācija sasniedza trīs komats piecus procentus"),
+]
+
+# ============================================================
+# Sporta rezultāti (sports scores)
+# ============================================================
+SCORE_CASES = [
+    ("Rezultāts 3:2",       "Rezultāts trīs divi"),
+    ("1:0",                 "viens nulle"),
+    ("Spēle beidzās 4:3",   "Spēle beidzās četri trīs"),
+]
+
+# ============================================================
+# Skaitļu diapazoni (number ranges)
+# ============================================================
+RANGE_CASES = [
+    ("5–10 gadus",           "piecus līdz desmit gadus"),
+    ("18–65 gadi",          "astoņpadsmit līdz sešdesmit pieci gadi"),
+    ("2–5 minūtes",         "divas līdz piecas minūtes"),
+    ("6-8 cilvēki",         "seši līdz astoņi cilvēki"),
+]
+
 
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
@@ -253,4 +294,24 @@ def test_clock_time(text, expected):
 
 @pytest.mark.parametrize("text,expected", NEGATIVE_CASES)
 def test_negative_numbers(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", LARGE_NUMBER_CASES)
+def test_large_numbers(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", PERCENTAGE_CASES)
+def test_percentages(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SCORE_CASES)
+def test_scores(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", RANGE_CASES)
+def test_ranges(text, expected):
     assert convert(text) == expected

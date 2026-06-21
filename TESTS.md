@@ -134,3 +134,39 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `-5 grādi` | `mīnus pieci grādi` | ✅ |
 | `-10,5 grādi` | `mīnus desmit komats pieci grādi` | ✅ |
 | `-1 grāds` | `mīnus viens grāds` | ✅ |
+
+## Large Numbers
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `1000 cilvēku` | `tūkstoš cilvēku` | ✅ |
+| `3000 gadu` | `trīstūkstoš gadu` | ✅ |
+| `5000 gadus` | `piectūkstoš gadus` | ✅ |
+| `10000 cilvēku` | `desmit tūkstoši cilvēku` | ✅ |
+
+## Percentages
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `5%` | `pieci procenti` | ✅ |
+| `21%` | `divdesmit viens procents` | ✅ |
+| `100%` | `simts procentu` | ✅ |
+| `0,5%` | `nulle komats pieci procenti` | ✅ |
+| `Inflācija sasniedza 3,5 procentus` | `Inflācija sasniedza trīs komats piecus procentus` | ✅ |
+
+## Scores
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `Rezultāts 3:2` | `Rezultāts trīs divi` | ✅ |
+| `1:0` | `viens nulle` | ✅ |
+| `Spēle beidzās 4:3` | `Spēle beidzās četri trīs` | ✅ |
+
+## Ranges
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `5–10 gadus` | `piecus līdz desmit gadus` | ✅ |
+| `18–65 gadi` | `astoņpadsmit līdz sešdesmit pieci gadi` | ✅ |
+| `2–5 minūtes` | `divas līdz piecas minūtes` | ✅ |
+| `6-8 cilvēki` | `seši līdz astoņi cilvēki` | ✅ |
