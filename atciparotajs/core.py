@@ -7,6 +7,7 @@ from atciparotajs.roman import roman_to_int, is_valid_roman
 from atciparotajs.abbreviations import expand_abbreviations
 from atciparotajs.time import clock_time
 from atciparotajs.phone import expand_phones
+from atciparotajs.currency import currency as _currency, CURRENCY_FORMS
 
 # Groups: 1,2=decimal; 3=arabic ordinal; 4=roman ordinal; 5=roman cardinal; 6=arabic cardinal
 PATTERN = re.compile(
@@ -88,6 +89,34 @@ _PCT_PREPS = {
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
+
+# Currency patterns — amount with symbol or ISO code
+_CURRENCY_SYMBOL_MAP = {'€': 'EUR', '$': 'USD', '£': 'GBP'}
+_CUR_CODES_RE = '|'.join(re.escape(c) for c in sorted(CURRENCY_FORMS, key=len, reverse=True))
+_CUR_AMT = r'(\d+)(?:[,.](\d{1,2}))?'
+# Symbol before: €1,82 or € 1,82
+_CUR_SYM_BEFORE = re.compile(r'([€$£])\s*' + _CUR_AMT)
+# Symbol after: 1,82€ or 1,82 €
+_CUR_SYM_AFTER = re.compile(_CUR_AMT + r'\s*([€$£])')
+# Code before: EUR 1,82
+_CUR_CODE_BEFORE = re.compile(r'\b(' + _CUR_CODES_RE + r')\s+' + _CUR_AMT, re.IGNORECASE)
+# Code after: 1,82 EUR
+_CUR_CODE_AFTER = re.compile(_CUR_AMT + r'\s+(' + _CUR_CODES_RE + r')\b', re.IGNORECASE)
+
+
+def _parse_cur_amount(int_str: str, dec_str: str | None) -> tuple[int, int]:
+    major = int(int_str)
+    if dec_str is None:
+        minor = 0
+    elif len(dec_str) == 1:
+        minor = int(dec_str) * 10
+    else:
+        minor = int(dec_str[:2])
+    return major, minor
+
+
+def _expand_cur(major: int, minor: int, code: str) -> str:
+    return _currency((major, minor), code.upper())
 
 
 def _expand_super_unit(m: re.Match) -> str:
@@ -248,6 +277,18 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)
+
+    # Currency amounts must expand before phones and abbreviations
+    text = _CUR_CODE_BEFORE.sub(
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(2), m.group(3)), m.group(1)), text)
+    text = _CUR_CODE_AFTER.sub(
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(1), m.group(2)), m.group(3)), text)
+    text = _CUR_SYM_BEFORE.sub(
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(2), m.group(3)),
+                              _CURRENCY_SYMBOL_MAP[m.group(1)]), text)
+    text = _CUR_SYM_AFTER.sub(
+        lambda m: _expand_cur(*_parse_cur_amount(m.group(1), m.group(2)),
+                              _CURRENCY_SYMBOL_MAP[m.group(3)]), text)
 
     # Phone numbers must expand before abbreviations to prevent "tel." → "litrs"
     text = expand_phones(text)

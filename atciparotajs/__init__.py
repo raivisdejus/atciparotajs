@@ -1,2 +1,3 @@
 from atciparotajs.core import convert
-__all__ = ["convert"]
+from atciparotajs.currency import currency
+__all__ = ["convert", "currency"]

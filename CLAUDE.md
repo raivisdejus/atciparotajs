@@ -1,2 +1,2 @@
 Notes for the AI
-- In tests add all constants before any test function
+- In tests, always define all constants (test case lists, lookup tables, etc.) before any `def` or `class` block. Never interleave constants with functions.

@@ -16,7 +16,9 @@ Izmantotie vārdi / Words used in tests:
 """
 
 import pytest
-from atciparotajs import convert
+from atciparotajs import convert, currency
+
+# NOTE: All test-case constants must be defined here, before any test function.
 
 
 # ============================================================
@@ -278,6 +280,102 @@ PHONE_CASES = [
 ]
 
 
+# ============================================================
+# Valūtas / Currency cases
+# ============================================================
+
+CURRENCY_CASES = [
+    # EUR — invariable noun "eiro", cents = "cents/centi/centu"
+    ((1,    0,  'EUR'), "viens eiro"),
+    ((2,    0,  'EUR'), "divi eiro"),
+    ((5,    0,  'EUR'), "pieci eiro"),
+    ((11,   0,  'EUR'), "vienpadsmit eiro"),
+    ((21,   0,  'EUR'), "divdesmit viens eiro"),
+    ((0,    1,  'EUR'), "nulle eiro un viens cents"),
+    ((1,   50,  'EUR'), "viens eiro un piecdesmit centu"),
+    ((10,  99,  'EUR'), "desmit eiro un deviņdesmit deviņi centi"),
+    ((100,  0,  'EUR'), "simts eiro"),
+    # EUR_LEGAL — "euro"
+    ((1,    0,  'EUR_LEGAL'), "viens euro"),
+    ((3,    0,  'EUR_LEGAL'), "trīs euro"),
+    # USD — masculine: dolārs/dolāri/dolāru
+    ((1,    0,  'USD'), "viens dolārs"),
+    ((2,    0,  'USD'), "divi dolāri"),
+    ((10,   0,  'USD'), "desmit dolāru"),
+    ((1,   25,  'USD'), "viens dolārs un divdesmit pieci centi"),
+    # LVL — lats/lati/latu + santīms/santīmi/santīmu
+    ((1,    0,  'LVL'), "viens lats"),
+    ((4,    0,  'LVL'), "četri lati"),
+    ((20,   0,  'LVL'), "divdesmit latu"),
+    ((1,    1,  'LVL'), "viens lats un viens santīms"),
+    ((3,    2,  'LVL'), "trīs lati un divi santīmi"),
+    ((10,  15,  'LVL'), "desmit latu un piecpadsmit santīmu"),
+    # RUB — rublis/rubļi/rubļu + kapeika/kapeikas/kapeiku (feminine cents)
+    ((1,    0,  'RUB'), "viens rublis"),
+    ((5,    0,  'RUB'), "pieci rubļi"),
+    ((11,   0,  'RUB'), "vienpadsmit rubļu"),
+    ((1,    1,  'RUB'), "viens rublis un viena kapeika"),
+    ((2,    2,  'RUB'), "divi rubļi un divas kapeikas"),
+    ((10,  10,  'RUB'), "desmit rubļu un desmit kapeiku"),
+    # GBP — feminine major: sterliņu mārciņa/mārciņas/mārciņu
+    ((1,    0,  'GBP'), "viena sterliņu mārciņa"),
+    ((3,    0,  'GBP'), "trīs sterliņu mārciņas"),
+    ((15,   0,  'GBP'), "piecpadsmit sterliņu mārciņu"),
+    # SEK — krona/kronas/kronu + ēre/ēres/ēru (feminine)
+    ((1,    0,  'SEK'), "viena krona"),
+    ((2,    0,  'SEK'), "divas kronas"),
+    ((10,   0,  'SEK'), "desmit kronu"),
+    ((1,   50,  'SEK'), "viena krona un piecdesmit ēru"),
+]
+
+CURRENCY_ADJECTIVE_CASES = [
+    ((1,   0, 'USD', True), "viens ASV dolārs"),
+    ((10,  0, 'USD', True), "desmit ASV dolāru"),
+    ((1,   0, 'SEK', True), "viena Zviedrijas krona"),
+    ((1,   0, 'AUD', True), "viens Austrālijas dolārs"),
+    # EUR has no adjective entry — adjective=True is a no-op
+    ((5,   0, 'EUR', True), "pieci eiro"),
+]
+
+CURRENCY_FLOAT_CASES = [
+    (10.5,   'EUR', "desmit eiro un piecdesmit centu"),
+    (1.01,   'USD', "viens dolārs un viens cents"),
+    (2.99,   'LVL', "divi lati un deviņdesmit deviņi santīmi"),
+]
+
+CURRENCY_CONVERT_CASES = [
+    # Symbol after (no space)
+    ("1,82€",           "viens eiro un astoņdesmit divi centi"),
+    ("5€",              "pieci eiro"),
+    ("1,82$",           "viens dolārs un astoņdesmit divi centi"),
+    ("1,82£",           "viena sterliņu mārciņa un astoņdesmit divi pensi"),
+    # Symbol after (with space)
+    ("1,82 €",          "viens eiro un astoņdesmit divi centi"),
+    ("10 €",            "desmit eiro"),
+    # Symbol before (no space)
+    ("€1,82",           "viens eiro un astoņdesmit divi centi"),
+    ("$5",              "pieci dolāri"),
+    # Symbol before (with space)
+    ("€ 1,82",          "viens eiro un astoņdesmit divi centi"),
+    # Code after
+    ("1,82 EUR",        "viens eiro un astoņdesmit divi centi"),
+    ("5 EUR",           "pieci eiro"),
+    ("10,99 USD",       "desmit dolāru un deviņdesmit deviņi centi"),
+    ("1 LVL",           "viens lats"),
+    # Code before
+    ("EUR 1,82",        "viens eiro un astoņdesmit divi centi"),
+    ("USD 10,99",       "desmit dolāru un deviņdesmit deviņi centi"),
+    ("EUR 100",         "simts eiro"),
+    # Decimal with dot separator
+    ("1.82€",           "viens eiro un astoņdesmit divi centi"),
+    ("EUR 1.82",        "viens eiro un astoņdesmit divi centi"),
+    # Single-digit fractional part (e.g. 1,8 → 80 cents)
+    ("1,8€",            "viens eiro un astoņdesmit centu"),
+    # Embedded in sentence
+    ("Prece maksā 2,50 EUR.", "Prece maksā divi eiro un piecdesmit centu."),
+]
+
+
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
     assert convert(text) == expected
@@ -370,4 +468,26 @@ def test_ranges(text, expected):
 
 @pytest.mark.parametrize("text,expected", PHONE_CASES)
 def test_phones(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("args,expected", CURRENCY_CASES)
+def test_currency(args, expected):
+    n, c, code = args
+    assert currency((n, c), code) == expected
+
+
+@pytest.mark.parametrize("args,expected", CURRENCY_ADJECTIVE_CASES)
+def test_currency_adjective(args, expected):
+    n, c, code, adj = args
+    assert currency((n, c), code, adjective=adj) == expected
+
+
+@pytest.mark.parametrize("amount,code,expected", CURRENCY_FLOAT_CASES)
+def test_currency_float(amount, code, expected):
+    assert currency(amount, code) == expected
+
+
+@pytest.mark.parametrize("text,expected", CURRENCY_CONVERT_CASES)
+def test_currency_in_text(text, expected):
     assert convert(text) == expected

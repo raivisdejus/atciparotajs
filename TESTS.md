@@ -212,3 +212,85 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `+37167030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `tel. +371 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `{phone:67030638}` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+
+## Currency
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `` | `viens eiro` | ✅ |
+| `` | `divi eiro` | ✅ |
+| `` | `pieci eiro` | ✅ |
+| `` | `vienpadsmit eiro` | ✅ |
+| `` | `divdesmit viens eiro` | ✅ |
+| `` | `nulle eiro un viens cents` | ✅ |
+| `` | `viens eiro un piecdesmit centu` | ✅ |
+| `` | `desmit eiro un deviņdesmit deviņi centi` | ✅ |
+| `` | `simts eiro` | ✅ |
+| `` | `viens euro` | ✅ |
+| `` | `trīs euro` | ✅ |
+| `` | `viens dolārs` | ✅ |
+| `` | `divi dolāri` | ✅ |
+| `` | `desmit dolāru` | ✅ |
+| `` | `viens dolārs un divdesmit pieci centi` | ✅ |
+| `` | `viens lats` | ✅ |
+| `` | `četri lati` | ✅ |
+| `` | `divdesmit latu` | ✅ |
+| `` | `viens lats un viens santīms` | ✅ |
+| `` | `trīs lati un divi santīmi` | ✅ |
+| `` | `desmit latu un piecpadsmit santīmu` | ✅ |
+| `` | `viens rublis` | ✅ |
+| `` | `pieci rubļi` | ✅ |
+| `` | `vienpadsmit rubļu` | ✅ |
+| `` | `viens rublis un viena kapeika` | ✅ |
+| `` | `divi rubļi un divas kapeikas` | ✅ |
+| `` | `desmit rubļu un desmit kapeiku` | ✅ |
+| `` | `viena sterliņu mārciņa` | ✅ |
+| `` | `trīs sterliņu mārciņas` | ✅ |
+| `` | `piecpadsmit sterliņu mārciņu` | ✅ |
+| `` | `viena krona` | ✅ |
+| `` | `divas kronas` | ✅ |
+| `` | `desmit kronu` | ✅ |
+| `` | `viena krona un piecdesmit ēru` | ✅ |
+
+## Currency Adjective
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `` | `viens ASV dolārs` | ✅ |
+| `` | `desmit ASV dolāru` | ✅ |
+| `` | `viena Zviedrijas krona` | ✅ |
+| `` | `viens Austrālijas dolārs` | ✅ |
+| `` | `pieci eiro` | ✅ |
+
+## Currency Float
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `` | `desmit eiro un piecdesmit centu` | ✅ |
+| `` | `viens dolārs un viens cents` | ✅ |
+| `` | `divi lati un deviņdesmit deviņi santīmi` | ✅ |
+
+## Currency In Text
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `1,82€` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `5€` | `pieci eiro` | ✅ |
+| `1,82$` | `viens dolārs un astoņdesmit divi centi` | ✅ |
+| `1,82£` | `viena sterliņu mārciņa un astoņdesmit divi pensi` | ✅ |
+| `1,82 €` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `10 €` | `desmit eiro` | ✅ |
+| `€1,82` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `$5` | `pieci dolāri` | ✅ |
+| `€ 1,82` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `1,82 EUR` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `5 EUR` | `pieci eiro` | ✅ |
+| `10,99 USD` | `desmit dolāru un deviņdesmit deviņi centi` | ✅ |
+| `1 LVL` | `viens lats` | ✅ |
+| `EUR 1,82` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `USD 10,99` | `desmit dolāru un deviņdesmit deviņi centi` | ✅ |
+| `EUR 100` | `simts eiro` | ✅ |
+| `1.82€` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `EUR 1.82` | `viens eiro un astoņdesmit divi centi` | ✅ |
+| `1,8€` | `viens eiro un astoņdesmit centu` | ✅ |
+| `Prece maksā 2,50 EUR.` | `Prece maksā divi eiro un piecdesmit centu.` | ✅ |
