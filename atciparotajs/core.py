@@ -27,6 +27,9 @@ _SCORE_PAT = re.compile(r'\b(\d+):(\d+)\b')
 # Ordinal year range "N.–M." (e.g. "1941.–1945. gads")
 _ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-—](\d+)\.(?=\s|$)')
 
+# Undotted year range "NNNN–NNNN gad…" (e.g. "1941–1945 gads")
+_YEAR_RANGE_PAT = re.compile(r'\b(\d{4})[–\-—](\d{4})(?=\s+gad)')
+
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
 _RANGE_PAT = re.compile(r'\b(\d+)[–\-—](\d+)\b')
 
@@ -176,6 +179,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
         bucket = _next_word_bucket(text, m.end())
         return f"{ordinal(int(m.group(1)), bucket)} līdz {ordinal(int(m.group(2)), bucket)}"
     text = _ORD_RANGE_PAT.sub(_expand_ord_range, text)
+    # Undotted year ranges "1941–1945 gads" — treat as ordinals
+    text = _YEAR_RANGE_PAT.sub(_expand_ord_range, text)
     # Scores must run after time (so clock patterns are already consumed)
     text = _SCORE_PAT.sub(
         lambda m: f"{cardinal(int(m.group(1)), 1)} {cardinal(int(m.group(2)), 1)}", text
