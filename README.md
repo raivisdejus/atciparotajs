@@ -66,6 +66,9 @@ pytest tests/test_numbers.py -v
 
 The test file is designed to be readable by non-technical Latvian speakers for validation and to add new cases.
 
+## Testing with TTS
+For real life TTS testing go to [Latvian-Piper-TTS](https://huggingface.co/spaces/RaivisDejus/Latvian-Piper-TTS) 
+
 ## License
 
 MIT
