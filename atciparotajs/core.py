@@ -145,6 +145,11 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
 
 _SKIP_WORDS = {"un", "vai", "bet", "arī", "kā", "ar"}
 
+# Prepositions that introduce a new phrase; when one follows a genitive noun,
+# that noun is the head (not a genitive modifier), so the look-ahead must stop.
+_PREP_WORDS = {"līdz", "no", "uz", "par", "pie", "pēc", "aiz", "pār", "ap",
+               "virs", "zem", "pirms", "pēc", "starp", "caur"}
+
 
 def _next_word_bucket(text: str, pos: int) -> int:
     """Find next Latvian word after pos and return its bucket."""
@@ -160,14 +165,18 @@ def _next_word_bucket(text: str, pos: int) -> int:
             return 1
         word = m.group(0)
     bucket = detect_bucket(word)
-    # If genitive (bucket 3 or 6), look at the word after for better context
+    # If genitive (bucket 3 or 6), look at the word after for better context.
+    # Stop if the following word is a preposition — it signals the genitive word
+    # is the head noun, not an attribute (e.g. "4. jūnija līdz 7.").
     if bucket in (3, 6):
         rest2 = rest[m.end():]
         m2 = LAT_WORD.search(rest2)
         if m2:
-            bucket2 = detect_bucket(m2.group(0))
-            if bucket2 not in (3, 6):
-                return bucket2
+            w2 = m2.group(0).lower()
+            if w2 not in _PREP_WORDS:
+                bucket2 = detect_bucket(m2.group(0))
+                if bucket2 not in (3, 6):
+                    return bucket2
     return bucket
 
 
