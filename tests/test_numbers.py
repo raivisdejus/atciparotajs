@@ -250,6 +250,22 @@ RANGE_CASES = [
     ("6-8 cilvēki",         "seši līdz astoņi cilvēki"),
 ]
 
+# ============================================================
+# Telefona numuri (phone numbers)
+# ============================================================
+PHONE_CASES = [
+    ("tel. 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("tel: 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("tel 67 030 638",       "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("tel.67030638",         "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("mob. 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("mob: 67030638",        "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("+371 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("+37167030638",         "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("tel. +371 67 030 638", "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("{phone:67030638}",     "seši septiņi nulle trīs nulle seši trīs astoņi"),
+]
+
 
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
@@ -338,4 +354,9 @@ def test_scores(text, expected):
 
 @pytest.mark.parametrize("text,expected", RANGE_CASES)
 def test_ranges(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", PHONE_CASES)
+def test_phones(text, expected):
     assert convert(text) == expected

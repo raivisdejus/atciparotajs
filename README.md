@@ -11,6 +11,7 @@ Numbers are inflected to agree in gender and grammatical case with the following
 - **Roman numerals** — `XIV gs.` → `četrpadsmitais gadsimts`
 - **Decimals/fractions** — `21,5 grami` → `divdesmit viens komats pieci grami`
 - **Abbreviation expansion** — `gs.` → `gadsimts`, `km.` → `kilometrs`, and more
+- **Phone numbers** — spelled out digit by digit (see below)
 
 ## Installation
 
@@ -48,6 +49,29 @@ echo "2 draugiem" | python -m atciparotajs
 # Disable abbreviation expansion
 python -m atciparotajs --no-expand-abbr "14. gs."
 ```
+
+### Phone numbers
+
+Phone numbers are detected automatically and read digit by digit:
+
+```python
+convert("tel. 67 030 638")      # → "seši septiņi nulle trīs nulle seši trīs astoņi"
+convert("mob: 67030638")        # → "seši septiņi nulle trīs nulle seši trīs astoņi"
+convert("+371 67 030 638")      # → "seši septiņi nulle trīs nulle seši trīs astoņi"
+```
+
+Recognized prefixes: `tel`, `tel.`, `tel:`, `mob`, `mob.`, `mob:`, and `+371`.
+
+For plain digit strings that should be read as phone numbers rather than as a number,
+use the explicit `{phone:…}` markup:
+
+```python
+convert("{phone:67030638}")     # → "seši septiņi nulle trīs nulle seši trīs astoņi"
+```
+
+Without the markup, a bare `67030638` would be read as the cardinal number. 
+Use `{phone:…}` whenever you want digit-by-digit pronunciation for a number that has 
+no recognizable phone prefix.
 
 ### Standalone binary
 

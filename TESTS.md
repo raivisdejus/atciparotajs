@@ -187,3 +187,18 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `18–65 gadi` | `astoņpadsmit līdz sešdesmit pieci gadi` | ✅ |
 | `2–5 minūtes` | `divas līdz piecas minūtes` | ✅ |
 | `6-8 cilvēki` | `seši līdz astoņi cilvēki` | ✅ |
+
+## Phones
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `tel. 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `tel: 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `tel 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `tel.67030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `mob. 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `mob: 67030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `+371 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `+37167030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `tel. +371 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `{phone:67030638}` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |

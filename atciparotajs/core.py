@@ -6,6 +6,7 @@ from atciparotajs.fractions import fraction
 from atciparotajs.roman import roman_to_int, is_valid_roman
 from atciparotajs.abbreviations import expand_abbreviations
 from atciparotajs.time import clock_time
+from atciparotajs.phone import expand_phones
 
 # Groups: 1,2=decimal; 3=arabic ordinal; 4=roman ordinal; 5=roman cardinal; 6=arabic cardinal
 PATTERN = re.compile(
@@ -212,6 +213,9 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)
+
+    # Phone numbers must expand before abbreviations to prevent "tel." → "litrs"
+    text = expand_phones(text)
 
     if expand_abbr:
         text = expand_abbreviations(text)
