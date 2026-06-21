@@ -15,6 +15,8 @@ Numbers are inflected to agree in gender and grammatical case with the following
 ## Installation
 
 ```bash
+git clone https://github.com/raivisdejus/atciparotajs
+cd atciparotajs
 pip install -e .
 ```
 
