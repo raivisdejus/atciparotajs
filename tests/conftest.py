@@ -15,8 +15,15 @@ def pytest_collection_finish(session):
         if not hasattr(item, "callspec"):
             continue
         params = item.callspec.params
-        text = params.get("text", "")
         expected = params.get("expected", "")
+        if "text" in params:
+            text = params["text"]
+        elif "args" in params:
+            text = str(params["args"])
+        elif "amount" in params and "code" in params:
+            text = f"{params['amount']} {params['code']}"
+        else:
+            text = ", ".join(f"{k}={v}" for k, v in params.items() if k != "expected")
         _results[item.nodeid] = {"text": text, "expected": expected, "outcome": "?"}
 
 

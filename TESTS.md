@@ -218,58 +218,58 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 
 | Input | Expected | Result |
 |-------|----------|--------|
-| `` | `viens eiro` | ✅ |
-| `` | `divi eiro` | ✅ |
-| `` | `pieci eiro` | ✅ |
-| `` | `vienpadsmit eiro` | ✅ |
-| `` | `divdesmit viens eiro` | ✅ |
-| `` | `nulle eiro un viens cents` | ✅ |
-| `` | `viens eiro un piecdesmit centu` | ✅ |
-| `` | `desmit eiro un deviņdesmit deviņi centi` | ✅ |
-| `` | `simts eiro` | ✅ |
-| `` | `viens euro` | ✅ |
-| `` | `trīs euro` | ✅ |
-| `` | `viens dolārs` | ✅ |
-| `` | `divi dolāri` | ✅ |
-| `` | `desmit dolāru` | ✅ |
-| `` | `viens dolārs un divdesmit pieci centi` | ✅ |
-| `` | `viens lats` | ✅ |
-| `` | `četri lati` | ✅ |
-| `` | `divdesmit latu` | ✅ |
-| `` | `viens lats un viens santīms` | ✅ |
-| `` | `trīs lati un divi santīmi` | ✅ |
-| `` | `desmit latu un piecpadsmit santīmu` | ✅ |
-| `` | `viens rublis` | ✅ |
-| `` | `pieci rubļi` | ✅ |
-| `` | `vienpadsmit rubļu` | ✅ |
-| `` | `viens rublis un viena kapeika` | ✅ |
-| `` | `divi rubļi un divas kapeikas` | ✅ |
-| `` | `desmit rubļu un desmit kapeiku` | ✅ |
-| `` | `viena sterliņu mārciņa` | ✅ |
-| `` | `trīs sterliņu mārciņas` | ✅ |
-| `` | `piecpadsmit sterliņu mārciņu` | ✅ |
-| `` | `viena krona` | ✅ |
-| `` | `divas kronas` | ✅ |
-| `` | `desmit kronu` | ✅ |
-| `` | `viena krona un piecdesmit ēru` | ✅ |
+| `(1, 0, 'EUR')` | `viens eiro` | ✅ |
+| `(2, 0, 'EUR')` | `divi eiro` | ✅ |
+| `(5, 0, 'EUR')` | `pieci eiro` | ✅ |
+| `(11, 0, 'EUR')` | `vienpadsmit eiro` | ✅ |
+| `(21, 0, 'EUR')` | `divdesmit viens eiro` | ✅ |
+| `(0, 1, 'EUR')` | `nulle eiro un viens cents` | ✅ |
+| `(1, 50, 'EUR')` | `viens eiro un piecdesmit centu` | ✅ |
+| `(10, 99, 'EUR')` | `desmit eiro un deviņdesmit deviņi centi` | ✅ |
+| `(100, 0, 'EUR')` | `simts eiro` | ✅ |
+| `(1, 0, 'EUR_LEGAL')` | `viens euro` | ✅ |
+| `(3, 0, 'EUR_LEGAL')` | `trīs euro` | ✅ |
+| `(1, 0, 'USD')` | `viens dolārs` | ✅ |
+| `(2, 0, 'USD')` | `divi dolāri` | ✅ |
+| `(10, 0, 'USD')` | `desmit dolāru` | ✅ |
+| `(1, 25, 'USD')` | `viens dolārs un divdesmit pieci centi` | ✅ |
+| `(1, 0, 'LVL')` | `viens lats` | ✅ |
+| `(4, 0, 'LVL')` | `četri lati` | ✅ |
+| `(20, 0, 'LVL')` | `divdesmit latu` | ✅ |
+| `(1, 1, 'LVL')` | `viens lats un viens santīms` | ✅ |
+| `(3, 2, 'LVL')` | `trīs lati un divi santīmi` | ✅ |
+| `(10, 15, 'LVL')` | `desmit latu un piecpadsmit santīmu` | ✅ |
+| `(1, 0, 'RUB')` | `viens rublis` | ✅ |
+| `(5, 0, 'RUB')` | `pieci rubļi` | ✅ |
+| `(11, 0, 'RUB')` | `vienpadsmit rubļu` | ✅ |
+| `(1, 1, 'RUB')` | `viens rublis un viena kapeika` | ✅ |
+| `(2, 2, 'RUB')` | `divi rubļi un divas kapeikas` | ✅ |
+| `(10, 10, 'RUB')` | `desmit rubļu un desmit kapeiku` | ✅ |
+| `(1, 0, 'GBP')` | `viena sterliņu mārciņa` | ✅ |
+| `(3, 0, 'GBP')` | `trīs sterliņu mārciņas` | ✅ |
+| `(15, 0, 'GBP')` | `piecpadsmit sterliņu mārciņu` | ✅ |
+| `(1, 0, 'SEK')` | `viena krona` | ✅ |
+| `(2, 0, 'SEK')` | `divas kronas` | ✅ |
+| `(10, 0, 'SEK')` | `desmit kronu` | ✅ |
+| `(1, 50, 'SEK')` | `viena krona un piecdesmit ēru` | ✅ |
 
 ## Currency Adjective
 
 | Input | Expected | Result |
 |-------|----------|--------|
-| `` | `viens ASV dolārs` | ✅ |
-| `` | `desmit ASV dolāru` | ✅ |
-| `` | `viena Zviedrijas krona` | ✅ |
-| `` | `viens Austrālijas dolārs` | ✅ |
-| `` | `pieci eiro` | ✅ |
+| `(1, 0, 'USD', True)` | `viens ASV dolārs` | ✅ |
+| `(10, 0, 'USD', True)` | `desmit ASV dolāru` | ✅ |
+| `(1, 0, 'SEK', True)` | `viena Zviedrijas krona` | ✅ |
+| `(1, 0, 'AUD', True)` | `viens Austrālijas dolārs` | ✅ |
+| `(5, 0, 'EUR', True)` | `pieci eiro` | ✅ |
 
 ## Currency Float
 
 | Input | Expected | Result |
 |-------|----------|--------|
-| `` | `desmit eiro un piecdesmit centu` | ✅ |
-| `` | `viens dolārs un viens cents` | ✅ |
-| `` | `divi lati un deviņdesmit deviņi santīmi` | ✅ |
+| `10.5 EUR` | `desmit eiro un piecdesmit centu` | ✅ |
+| `1.01 USD` | `viens dolārs un viens cents` | ✅ |
+| `2.99 LVL` | `divi lati un deviņdesmit deviņi santīmi` | ✅ |
 
 ## Currency In Text
 
