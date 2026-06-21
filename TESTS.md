@@ -197,6 +197,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `18–65 gadi` | `astoņpadsmit līdz sešdesmit pieci gadi` | ✅ |
 | `2–5 minūtes` | `divas līdz piecas minūtes` | ✅ |
 | `6-8 cilvēki` | `seši līdz astoņi cilvēki` | ✅ |
+| `6-8 cilvēkiem` | `sešiem līdz astoņiem cilvēkiem` | ✅ |
 
 ## Phones
 

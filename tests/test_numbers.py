@@ -257,10 +257,11 @@ SCORE_CASES = [
 # Skaitļu diapazoni (number ranges)
 # ============================================================
 RANGE_CASES = [
-    ("5–10 gadus",           "piecus līdz desmit gadus"),
+    ("5–10 gadus",          "piecus līdz desmit gadus"),
     ("18–65 gadi",          "astoņpadsmit līdz sešdesmit pieci gadi"),
     ("2–5 minūtes",         "divas līdz piecas minūtes"),
     ("6-8 cilvēki",         "seši līdz astoņi cilvēki"),
+    ("6-8 cilvēkiem",       "sešiem līdz astoņiem cilvēkiem"),
 ]
 
 # ============================================================
