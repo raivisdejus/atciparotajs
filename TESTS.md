@@ -152,7 +152,11 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `21%` | `divdesmit viens procents` | ✅ |
 | `100%` | `simts procentu` | ✅ |
 | `0,5%` | `nulle komats pieci procenti` | ✅ |
+| `Inflācija sasniedza 3,5%` | `Inflācija sasniedza trīs komats piecus procentus` | ✅ |
 | `Inflācija sasniedza 3,5 procentus` | `Inflācija sasniedza trīs komats piecus procentus` | ✅ |
+| `sasniedza 5%` | `sasniedza piecus procentus` | ✅ |
+| `par 3,5%` | `par trīs komats pieciem procentiem` | ✅ |
+| `no 5%` | `no piecu procentu` | ✅ |
 
 ## Scores
 

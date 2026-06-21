@@ -36,6 +36,19 @@ _NEG_PAT = re.compile(r'(?<!\d)-(\d+(?:[.,]\d+)?)')
 # Percentage: integer or decimal followed by %
 _PCT_PAT = re.compile(r'(\d+(?:[.,]\d+)?)\s*%')
 
+# Noun forms of "procents" indexed by grammatical bucket
+_PROCENT_NOUN = {
+    1: "procents", 6: "procentu", 7: "procentā",
+    8: "procenti",  9: "procentiem", 10: "procentus", 11: "procentos",
+}
+
+# Prepositions and the case bucket they govern for a following percentage
+_PCT_PREPS = {
+    "par": 9, "ar": 9, "līdz": 9,
+    "no": 6, "pēc": 6, "pie": 6, "virs": 6, "zem": 6, "pirms": 6,
+    "ap": 10,
+}
+
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
 
@@ -46,20 +59,47 @@ def _expand_lpp(m: re.Match) -> str:
     return f"{cardinal(n, 2)} {noun}"
 
 
-def _expand_pct(m: re.Match) -> str:
+def _prev_word(text: str, start: int) -> str | None:
+    """Return the Latvian word immediately before position start, or None."""
+    before = text[:start].rstrip()
+    m = LAT_WORD.search(before[::-1])
+    if not m:
+        return None
+    return m.group(0)[::-1]
+
+
+def _bucket_from_prev(word: str) -> int | None:
+    """Return a case bucket override based on the word preceding the percentage, or None."""
+    w = word.lower()
+    if w in _PCT_PREPS:
+        return _PCT_PREPS[w]
+    if detect_bucket(word) == 2:  # ends in "a" — likely a verb taking accusative object
+        return 10
+    return None
+
+
+def _expand_pct(m: re.Match, full_text: str) -> str:
     raw = m.group(1)
+    prev = _prev_word(full_text, m.start())
+    ctx = _bucket_from_prev(prev) if prev else None
+
     if ',' in raw or '.' in raw:
         sep = ',' if ',' in raw else '.'
         int_part, dec_part = raw.split(sep, 1)
-        return fraction(int(int_part), dec_part, 8) + " procenti"
+        bucket = ctx if ctx is not None else 8
+        return fraction(int(int_part), dec_part, bucket) + " " + _PROCENT_NOUN[bucket]
+
     n = int(raw)
     last2 = n % 100
     last1 = n % 10
+    # 10–19 and multiples of 10 always take genitive plural — context does not override
     if 10 <= last2 <= 19 or last1 == 0:
         return cardinal(n, 6) + " procentu"
     if last1 == 1:
         return cardinal(n, 1) + " procents"
-    return cardinal(n, 8) + " procenti"
+    # 2–9 range: use context bucket if available
+    bucket = ctx if ctx is not None else 8
+    return cardinal(n, bucket) + " " + _PROCENT_NOUN[bucket]
 
 
 def _next_word_bucket(text: str, pos: int) -> int:
@@ -92,7 +132,7 @@ def convert(text: str, expand_abbr: bool = True) -> str:
         bucket = _next_word_bucket(text, m.end())
         return f"{cardinal(int(m.group(1)), bucket)} līdz {cardinal(int(m.group(2)), bucket)}"
     text = _RANGE_PAT.sub(_expand_range, text)
-    text = _PCT_PAT.sub(_expand_pct, text)
+    text = _PCT_PAT.sub(lambda m: _expand_pct(m, text), text)
     text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
