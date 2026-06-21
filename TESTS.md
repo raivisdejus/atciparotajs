@@ -167,6 +167,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `par 3,5%` | `par trīs komats pieciem procentiem` | ✅ |
 | `no 5%` | `no piecu procentu` | ✅ |
 | `pārsniedza 15–20%` | `pārsniedza piecpadsmit līdz divdesmit procentus` | ✅ |
+| `6.—9. augustā` | `sestajā līdz devītajā augustā` | ✅ |
 
 ## Scores
 

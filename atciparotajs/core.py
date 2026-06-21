@@ -25,13 +25,13 @@ _TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
 _SCORE_PAT = re.compile(r'\b(\d+):(\d+)\b')
 
 # Ordinal year range "N.–M." (e.g. "1941.–1945. gads")
-_ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-](\d+)\.(?=\s|$)')
+_ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-—](\d+)\.(?=\s|$)')
 
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
-_RANGE_PAT = re.compile(r'\b(\d+)[–\-](\d+)\b')
+_RANGE_PAT = re.compile(r'\b(\d+)[–\-—](\d+)\b')
 
 # Percentage range "N–M%" or "N-M%"
-_PCT_RANGE_PAT = re.compile(r'\b(\d+(?:[.,]\d+)?)[–\-](\d+(?:[.,]\d+)?)\s*%')
+_PCT_RANGE_PAT = re.compile(r'\b(\d+(?:[.,]\d+)?)[–\-—](\d+(?:[.,]\d+)?)\s*%')
 
 # Space-separated thousands like "150 000" (collapse to plain number before any other processing)
 _SPACE_THOU_PAT = re.compile(r'\b(\d{1,3}(?:[  ]\d{3})+)\b')
