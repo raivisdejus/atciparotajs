@@ -100,6 +100,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `2026. gads` | `divi tūkstoši divdesmit sestais gads` | ✅ |
 | `1941.–1945. gads` | `tūkstoš deviņsimt četrdesmit pirmais līdz tūkstoš deviņsimt četrdesmit piektais gads` | ✅ |
 | `1941.–1945. gadā` | `tūkstoš deviņsimt četrdesmit pirmajā līdz tūkstoš deviņsimt četrdesmit piektajā gadā` | ✅ |
+| `1927. un 1928. gadā` | `tūkstoš deviņsimt divdesmit septītajā un tūkstoš deviņsimt divdesmit astotajā gadā` | ✅ |
 
 ## Initials Not Roman
 

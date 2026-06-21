@@ -139,6 +139,9 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
     return cardinal(n, bucket) + " " + _PROCENT_NOUN[bucket]
 
 
+_SKIP_WORDS = {"un", "vai", "bet", "arī", "kā", "ar"}
+
+
 def _next_word_bucket(text: str, pos: int) -> int:
     """Find next Latvian word after pos and return its bucket."""
     rest = text[pos:]
@@ -146,6 +149,12 @@ def _next_word_bucket(text: str, pos: int) -> int:
     if not m:
         return 1
     word = m.group(0)
+    if word.lower() in _SKIP_WORDS:
+        rest = rest[m.end():]
+        m = LAT_WORD.search(rest)
+        if not m:
+            return 1
+        word = m.group(0)
     bucket = detect_bucket(word)
     # If genitive (bucket 3 or 6), look at the word after for better context
     if bucket in (3, 6):
