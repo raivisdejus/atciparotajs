@@ -125,10 +125,10 @@ def _expand_super_unit(m: re.Match) -> str:
     nom_sg, nom_pl, gen_pl = _SUPER_UNIT_MAP[m.group(2)]
     last2 = n % 100
     last1 = n % 10
-    if n == 1:
-        noun, bucket = nom_sg, 1
-    elif 10 <= last2 <= 19 or last1 == 0:
+    if 10 <= last2 <= 19 or last1 == 0:
         noun, bucket = gen_pl, 6
+    elif last1 == 1:
+        noun, bucket = nom_sg, 1
     else:
         noun, bucket = nom_pl, 8
     return f"{cardinal(n, bucket)} {noun}"
@@ -139,10 +139,10 @@ def _expand_unit(m: re.Match) -> str:
     nom_sg, nom_pl, gen_pl = _UNIT_MAP[m.group(2)]
     last2 = n % 100
     last1 = n % 10
-    if n == 1:
-        noun, bucket = nom_sg, 1
-    elif 10 <= last2 <= 19 or last1 == 0:
+    if 10 <= last2 <= 19 or last1 == 0:
         noun, bucket = gen_pl, 6
+    elif last1 == 1:
+        noun, bucket = nom_sg, 1
     else:
         noun, bucket = nom_pl, 8
     return f"{cardinal(n, bucket)} {noun}"

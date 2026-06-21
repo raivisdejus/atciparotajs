@@ -86,7 +86,13 @@ CARDINAL_CASES = [
     ("3 kaķi",              "trīs kaķi"),               # nom masc pl
     ("21 diena",            "divdesmit viena diena"),   # nom fem sg
     ("100 grami",           "simts grami"),             # nom masc pl
-    ("Man ir 30",           "Man ir trīsdesmit"),        # standalone, no following noun
+    ("Man ir 30",           "Man ir trīsdesmit"),       # standalone, no following noun
+    ("Viņam ir 25 gadi",    "Viņam ir divdesmit pieci gadi"),   # age in sentence
+    ("Viņai bija 18 gadu",  "Viņai bija astoņpadsmit gadu"),    # gen pl age
+    ("apmēram 200 cilvēku", "apmēram divsimt cilvēku"),         # approximation word before
+    ("aptuveni 5 km",       "aptuveni pieci kilometri"),        # approximation word before
+    ("5 gadus vecs",        "piecus gadus vecs"),               # acc + adjective
+    ("30 gadus veca",       "trīsdesmit gadus veca"),           # acc + fem adjective
 ]
 
 # ============================================================
@@ -96,18 +102,32 @@ ORDINAL_CASES = [
     ("5. maijs",            "piektais maijs"),          # nom masc sg
     ("1. maijā",            "pirmajā maijā"),           # loc sg
     ("3. vieta",            "trešā vieta"),             # nom fem sg
+    ("3. vietā",            "trešajā vietā"),           # loc fem sg
+    ("2. vieta",            "otrā vieta"),              # loc fem sg
     ("2. vietā",            "otrajā vietā"),            # nom fem sg
     ("1. vieta",            "pirmā vieta"),             # nom fem sg
+    ("1. vietā",            "pirmajā vietā"),  # loc fem sg
+    ("21 vieta",            "divdesmit viena vieta"),   # nom fem sg
     ("21. vieta",           "divdesmit pirmā vieta"),   # nom fem sg
+    ("7. nodaļa",           "septītā nodaļa"),          # nom fem sg
+    ("5. nodaļa",           "piektā nodaļa"),           # nom fem sg
+    ("10. nodaļa",          "desmitā nodaļa"),          # nom fem sg
+    ("100. jubileja",       "simtā jubileja"),          # nom fem sg
+    ("1000. diena",         "tūkstošā diena"),          # nom fem sg
+    ("janvāra 15.",         "janvāra piecpadsmitais"),  # standalone trailing ordinal
+    ("ierādīja 3.",         "ierādīja trešais"),        # standalone trailing ordinal
 ]
 
 # ============================================================
 # Romiešu cipari (Roman numerals)
 # ============================================================
 ROMAN_CASES = [
-    ("II pasaules karš",    "otrais pasaules karš"),    # nom masc sg
-    ("XIV gs.",             "četrpadsmitais gadsimts"), # nom masc sg + abbreviation
-    ("V nodaļa",            "piektā nodaļa"),           # nom fem sg
+    ("II pasaules karš",    "otrais pasaules karš"),        # nom masc sg
+    ("XIV gs.",             "četrpadsmitais gadsimts"),     # nom masc sg + abbreviation
+    ("V nodaļa",            "piektā nodaļa"),               # nom fem sg
+    ("XIX gs.",             "deviņpadsmitais gadsimts"),    # 19th century
+    ("XXI gs.",             "divdesmit pirmais gadsimts"),  # 21st century
+    ("XX gadsimtā",         "divdesmitajā gadsimtā"),       # loc sg (in the 20th century)
 ]
 
 # ============================================================
@@ -118,6 +138,9 @@ FRACTION_CASES = [
     ("21.5 grami",          "divdesmit viens komats pieci grami"),
     ("3,14",                "trīs komats četrpadsmit"),
     ("1,5 stundas",         "viena komats piecas stundas"),
+    ("2,5 stundas",         "divas komats piecas stundas"),
+    ("1,25 stundas",        "viena komats divdesmit piecas stundas"),
+    ("0,5",                 "nulle komats pieci"),
 ]
 
 # ============================================================
@@ -200,6 +223,9 @@ TIME_CASES = [
     ("Pulksten 1:00",           "Pulksten vienos"),
     ("Sanāksme sākas 14:30",    "Sanāksme sākas divos trīsdesmit"),
     ("9:05",                    "deviņos piecās"),
+    ("8:00",                    "astoņos"),
+    ("12:00",                   "divpadsmitos"),
+    ("23:59",                   "vienpadsmitos piecdesmit deviņās"),
 ]
 
 # ============================================================
@@ -251,6 +277,7 @@ SCORE_CASES = [
     ("Rezultāts 3:2",       "Rezultāts trīs divi"),
     ("1:0",                 "viens nulle"),
     ("Spēle beidzās 4:3",   "Spēle beidzās četri trīs"),
+    ("Rezultāts: 2:1",      "Rezultāts: divi viens"),   # colon after label word
 ]
 
 # ============================================================
@@ -260,6 +287,7 @@ RANGE_CASES = [
     ("5–10 gadus",          "piecus līdz desmit gadus"),
     ("18–65 gadi",          "astoņpadsmit līdz sešdesmit pieci gadi"),
     ("2–5 minūtes",         "divas līdz piecas minūtes"),
+    ("5–10 minūtes",        "piecas līdz desmit minūtes"),
     ("6-8 cilvēki",         "seši līdz astoņi cilvēki"),
     ("6-8 cilvēkiem",       "sešiem līdz astoņiem cilvēkiem"),
 ]
@@ -280,6 +308,54 @@ PHONE_CASES = [
     ("{phone:67030638}",     "seši septiņi nulle trīs nulle seši trīs astoņi"),
 ]
 
+
+# ============================================================
+# Svars (weight) — kg (subtitle-common unit)
+# ============================================================
+WEIGHT_CASES = [
+    ("1 kg",        "viens kilograms"),
+    ("2 kg",        "divi kilogrami"),
+    ("5 kg",        "pieci kilogrami"),
+    ("10 kg",       "desmit kilogramu"),
+    ("11 kg",       "vienpadsmit kilogramu"),
+    ("21 kg",       "divdesmit viens kilograms"),
+    ("100 kg",      "simts kilogramu"),
+]
+
+# ============================================================
+# Sērijas un daļas (episodes and parts — subtitle-common ordinals)
+# ============================================================
+SUBTITLE_ORDINAL_CASES = [
+    ("2. sezona",           "otrā sezona"),
+    ("3. sērija",           "trešā sērija"),
+    ("1. sērijā",           "pirmajā sērijā"),
+    ("10. sērija",          "desmitā sērija"),
+    ("21. sērija",          "divdesmit pirmā sērija"),
+    ("4. daļa",             "ceturtā daļa"),
+    ("Sezona 2, 3. sērija", "Sezona divas, trešā sērija"),
+]
+
+# ============================================================
+# Dekādes (decades — e.g. "the 90s")
+# ============================================================
+DECADE_CASES = [
+    ("70. gados",   "septiņdesmitajos gados"),   # loc pl (in the 70s)
+    ("80. gados",   "astoņdesmitajos gados"),    # loc pl
+    ("90. gados",   "deviņdesmitajos gados"),    # loc pl
+    ("90. gadu",    "deviņdesmito gadu"),        # gen sg (of the 90s)
+    ("90. gadi",    "deviņdesmitie gadi"),       # nom pl
+    ("20. gados",   "divdesmitajos gados"),      # loc pl (in the 20s)
+]
+
+# ============================================================
+# Datumu teikumi (date sentences — subtitle-common patterns)
+# ============================================================
+DATE_SENTENCE_CASES = [
+    ("Tas notika 1945. gadā",
+     "Tas notika tūkstoš deviņsimt četrdesmit piektajā gadā"),
+    ("2024. gada 1. janvārī",
+     "divi tūkstoši divdesmit ceturtā gada pirmajā janvārī"),
+]
 
 # ============================================================
 # Valūtas / Currency cases
@@ -492,4 +568,24 @@ def test_currency_float(amount, code, expected):
 
 @pytest.mark.parametrize("text,expected", CURRENCY_CONVERT_CASES)
 def test_currency_in_text(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", WEIGHT_CASES)
+def test_weight_kg(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SUBTITLE_ORDINAL_CASES)
+def test_subtitle_ordinals(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", DECADE_CASES)
+def test_decades(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", DATE_SENTENCE_CASES)
+def test_date_sentences(text, expected):
     assert convert(text) == expected

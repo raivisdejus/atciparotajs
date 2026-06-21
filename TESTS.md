@@ -51,6 +51,12 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `21 diena` | `divdesmit viena diena` | ✅ |
 | `100 grami` | `simts grami` | ✅ |
 | `Man ir 30` | `Man ir trīsdesmit` | ✅ |
+| `Viņam ir 25 gadi` | `Viņam ir divdesmit pieci gadi` | ✅ |
+| `Viņai bija 18 gadu` | `Viņai bija astoņpadsmit gadu` | ✅ |
+| `apmēram 200 cilvēku` | `apmēram divsimt cilvēku` | ✅ |
+| `aptuveni 5 km` | `aptuveni pieci kilometri` | ✅ |
+| `5 gadus vecs` | `piecus gadus vecs` | ✅ |
+| `30 gadus veca` | `trīsdesmit gadus veca` | ✅ |
 
 ## Ordinals
 
@@ -59,9 +65,20 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `5. maijs` | `piektais maijs` | ✅ |
 | `1. maijā` | `pirmajā maijā` | ✅ |
 | `3. vieta` | `trešā vieta` | ✅ |
+| `3. vietā` | `trešajā vietā` | ✅ |
+| `2. vieta` | `otrā vieta` | ✅ |
 | `2. vietā` | `otrajā vietā` | ✅ |
 | `1. vieta` | `pirmā vieta` | ✅ |
+| `1. vietā` | `pirmajā vietā` | ✅ |
+| `21 vieta` | `divdesmit viena vieta` | ✅ |
 | `21. vieta` | `divdesmit pirmā vieta` | ✅ |
+| `7. nodaļa` | `septītā nodaļa` | ✅ |
+| `5. nodaļa` | `piektā nodaļa` | ✅ |
+| `10. nodaļa` | `desmitā nodaļa` | ✅ |
+| `100. jubileja` | `simtā jubileja` | ✅ |
+| `1000. diena` | `tūkstošā diena` | ✅ |
+| `janvāra 15.` | `janvāra piecpadsmitais` | ✅ |
+| `ierādīja 3.` | `ierādīja trešais` | ✅ |
 
 ## Roman
 
@@ -70,6 +87,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `II pasaules karš` | `otrais pasaules karš` | ✅ |
 | `XIV gs.` | `četrpadsmitais gadsimts` | ✅ |
 | `V nodaļa` | `piektā nodaļa` | ✅ |
+| `XIX gs.` | `deviņpadsmitais gadsimts` | ✅ |
+| `XXI gs.` | `divdesmit pirmais gadsimts` | ✅ |
+| `XX gadsimtā` | `divdesmitajā gadsimtā` | ✅ |
 
 ## Fractions
 
@@ -79,6 +99,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `21.5 grami` | `divdesmit viens komats pieci grami` | ✅ |
 | `3,14` | `trīs komats četrpadsmit` | ✅ |
 | `1,5 stundas` | `viena komats piecas stundas` | ✅ |
+| `2,5 stundas` | `divas komats piecas stundas` | ✅ |
+| `1,25 stundas` | `viena komats divdesmit piecas stundas` | ✅ |
+| `0,5` | `nulle komats pieci` | ✅ |
 
 ## Abbreviations
 
@@ -144,6 +167,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `Pulksten 1:00` | `Pulksten vienos` | ✅ |
 | `Sanāksme sākas 14:30` | `Sanāksme sākas divos trīsdesmit` | ✅ |
 | `9:05` | `deviņos piecās` | ✅ |
+| `8:00` | `astoņos` | ✅ |
+| `12:00` | `divpadsmitos` | ✅ |
+| `23:59` | `vienpadsmitos piecdesmit deviņās` | ✅ |
 
 ## Negative Numbers
 
@@ -188,6 +214,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `Rezultāts 3:2` | `Rezultāts trīs divi` | ✅ |
 | `1:0` | `viens nulle` | ✅ |
 | `Spēle beidzās 4:3` | `Spēle beidzās četri trīs` | ✅ |
+| `Rezultāts: 2:1` | `Rezultāts: divi viens` | ✅ |
 
 ## Ranges
 
@@ -196,6 +223,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `5–10 gadus` | `piecus līdz desmit gadus` | ✅ |
 | `18–65 gadi` | `astoņpadsmit līdz sešdesmit pieci gadi` | ✅ |
 | `2–5 minūtes` | `divas līdz piecas minūtes` | ✅ |
+| `5–10 minūtes` | `piecas līdz desmit minūtes` | ✅ |
 | `6-8 cilvēki` | `seši līdz astoņi cilvēki` | ✅ |
 | `6-8 cilvēkiem` | `sešiem līdz astoņiem cilvēkiem` | ✅ |
 
@@ -296,3 +324,45 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `1,8€` | `viens eiro un astoņdesmit centu` | ✅ |
 | `Prece maksā 2,50 EUR.` | `Prece maksā divus eiro un piecdesmit centu.` | ✅ |
 | `Salāti maksā 1.83EUR` | `Salāti maksā vienu eiro un astoņdesmit trīs centus` | ✅ |
+
+## Weight Kg
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `1 kg` | `viens kilograms` | ✅ |
+| `2 kg` | `divi kilogrami` | ✅ |
+| `5 kg` | `pieci kilogrami` | ✅ |
+| `10 kg` | `desmit kilogramu` | ✅ |
+| `11 kg` | `vienpadsmit kilogramu` | ✅ |
+| `21 kg` | `divdesmit viens kilograms` | ✅ |
+| `100 kg` | `simts kilogramu` | ✅ |
+
+## Subtitle Ordinals
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `2. sezona` | `otrā sezona` | ✅ |
+| `3. sērija` | `trešā sērija` | ✅ |
+| `1. sērijā` | `pirmajā sērijā` | ✅ |
+| `10. sērija` | `desmitā sērija` | ✅ |
+| `21. sērija` | `divdesmit pirmā sērija` | ✅ |
+| `4. daļa` | `ceturtā daļa` | ✅ |
+| `Sezona 2, 3. sērija` | `Sezona divas, trešā sērija` | ✅ |
+
+## Decades
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `70. gados` | `septiņdesmitajos gados` | ✅ |
+| `80. gados` | `astoņdesmitajos gados` | ✅ |
+| `90. gados` | `deviņdesmitajos gados` | ✅ |
+| `90. gadu` | `deviņdesmito gadu` | ✅ |
+| `90. gadi` | `deviņdesmitie gadi` | ✅ |
+| `20. gados` | `divdesmitajos gados` | ✅ |
+
+## Date Sentences
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `Tas notika 1945. gadā` | `Tas notika tūkstoš deviņsimt četrdesmit piektajā gadā` | ✅ |
+| `2024. gada 1. janvārī` | `divi tūkstoši divdesmit ceturtā gada pirmajā janvārī` | ✅ |
