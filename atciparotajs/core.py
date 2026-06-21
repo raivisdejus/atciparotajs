@@ -30,8 +30,23 @@ _ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-](\d+)\.(?=\s|$)')
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
 _RANGE_PAT = re.compile(r'\b(\d+)[–\-](\d+)\b')
 
+# Space-separated thousands like "150 000" (collapse to plain number before any other processing)
+_SPACE_THOU_PAT = re.compile(r'\b(\d{1,3}(?:[  ]\d{3})+)\b')
+
 # Matches "N lpp." to handle noun inflection together with the number
 _LPP_PAT = re.compile(r'(\d+)\s+lpp\.')
+
+# Unit abbreviations that must be inflected based on the preceding number
+_UNIT_MAP = {
+    "km":  ("kilometrs",  "kilometri",  "kilometru"),   # nom sg, nom pl, gen pl
+    "km.": ("kilometrs",  "kilometri",  "kilometru"),
+    "m":   ("metrs",      "metri",      "metru"),
+    "m.":  ("metrs",      "metri",      "metru"),
+    "kg":  ("kilograms",  "kilogrami",  "kilogramu"),
+    "kg.": ("kilograms",  "kilogrami",  "kilogramu"),
+}
+_UNIT_ABBR_RE = "|".join(re.escape(k) for k in sorted(_UNIT_MAP, key=len, reverse=True))
+_UNIT_PAT = re.compile(rf'(\d+)\s+({_UNIT_ABBR_RE})(?=\s|$|[,.])')
 
 # Negative numbers: "-N" at word boundary, not preceded by a digit (avoid ranges like "5-6")
 _NEG_PAT = re.compile(r'(?<!\d)-(\d+(?:[.,]\d+)?)')
@@ -54,6 +69,20 @@ _PCT_PREPS = {
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
+
+
+def _expand_unit(m: re.Match) -> str:
+    n = int(m.group(1))
+    nom_sg, nom_pl, gen_pl = _UNIT_MAP[m.group(2)]
+    last2 = n % 100
+    last1 = n % 10
+    if n == 1:
+        noun, bucket = nom_sg, 1
+    elif 10 <= last2 <= 19 or last1 == 0:
+        noun, bucket = gen_pl, 6
+    else:
+        noun, bucket = nom_pl, 8
+    return f"{cardinal(n, bucket)} {noun}"
 
 
 def _expand_lpp(m: re.Match) -> str:
@@ -125,6 +154,8 @@ def _next_word_bucket(text: str, pos: int) -> int:
 
 
 def convert(text: str, expand_abbr: bool = True) -> str:
+    # Collapse space-separated thousands ("150 000" → "150000") before any numeric processing
+    text = _SPACE_THOU_PAT.sub(lambda m: m.group(0).replace(" ", "").replace(" ", ""), text)
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
     # Ordinal ranges like "1941.–1945. gads" must run before general range/ordinal patterns
     def _expand_ord_range(m: re.Match) -> str:
@@ -142,6 +173,8 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     text = _RANGE_PAT.sub(_expand_range, text)
     text = _PCT_PAT.sub(lambda m: _expand_pct(m, text), text)
     text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
+    # Handle unit abbreviations (km, m, kg) before general abbreviation expansion
+    text = _UNIT_PAT.sub(_expand_unit, text)
     # Handle "N lpp." before general abbreviation expansion so we can inflect both
     # the number and the noun correctly (e.g. "58 lpp." → "piecdesmit astoņas lappuses")
     text = _LPP_PAT.sub(_expand_lpp, text)

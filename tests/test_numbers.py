@@ -124,6 +124,8 @@ FRACTION_CASES = [
 ABBREVIATION_CASES = [
     ("14. gs.",             "četrpadsmitais gadsimts"),
     ("t.i. pieci",          "tas ir pieci"),
+    ("15 km dziļumā",       "piecpadsmit kilometru dziļumā"),
+    ("15 km. dziļumā",      "piecpadsmit kilometru dziļumā"),
 ]
 
 # ============================================================
@@ -197,6 +199,7 @@ LARGE_NUMBER_CASES = [
     ("3000 gadu",           "trīstūkstoš gadu"),
     ("5000 gadus",          "piectūkstoš gadus"),
     ("10000 cilvēku",       "desmit tūkstoši cilvēku"),
+    ("150 000 karavīru",    "simt piecdesmit tūkstoši karavīru"),
 ]
 
 # ============================================================

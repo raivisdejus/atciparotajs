@@ -86,6 +86,8 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 |-------|----------|--------|
 | `14. gs.` | `četrpadsmitais gadsimts` | ✅ |
 | `t.i. pieci` | `tas ir pieci` | ✅ |
+| `15 km dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
+| `15 km. dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
 
 ## Dates
 
@@ -145,6 +147,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `3000 gadu` | `trīstūkstoš gadu` | ✅ |
 | `5000 gadus` | `piectūkstoš gadus` | ✅ |
 | `10000 cilvēku` | `desmit tūkstoši cilvēku` | ✅ |
+| `150 000 karavīru` | `simt piecdesmit tūkstoši karavīru` | ✅ |
 
 ## Percentages
 

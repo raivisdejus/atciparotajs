@@ -84,7 +84,7 @@ def _below_thousand(n: int, bucket: int) -> str:
             return HUNDREDS_PREFIX[hundreds]
     else:
         if hundreds == 1:
-            return "simts " + _below_hundred(remainder, bucket)
+            return "simt " + _below_hundred(remainder, bucket)
         else:
             return HUNDREDS_PREFIX[hundreds] + " " + _below_hundred(remainder, bucket)
 
