@@ -30,6 +30,9 @@ _ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-](\d+)\.(?=\s|$)')
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
 _RANGE_PAT = re.compile(r'\b(\d+)[–\-](\d+)\b')
 
+# Percentage range "N–M%" or "N-M%"
+_PCT_RANGE_PAT = re.compile(r'\b(\d+(?:[.,]\d+)?)[–\-](\d+(?:[.,]\d+)?)\s*%')
+
 # Space-separated thousands like "150 000" (collapse to plain number before any other processing)
 _SPACE_THOU_PAT = re.compile(r'\b(\d{1,3}(?:[  ]\d{3})+)\b')
 
@@ -44,6 +47,8 @@ _UNIT_MAP = {
     "m.":  ("metrs",      "metri",      "metru"),
     "kg":  ("kilograms",  "kilogrami",  "kilogramu"),
     "kg.": ("kilograms",  "kilogrami",  "kilogramu"),
+    "mm":  ("milimetrs",  "milimetri",  "milimetru"),
+    "mm.": ("milimetrs",  "milimetri",  "milimetru"),
 }
 _UNIT_ABBR_RE = "|".join(re.escape(k) for k in sorted(_UNIT_MAP, key=len, reverse=True))
 _UNIT_PAT = re.compile(rf'(\d+)\s+({_UNIT_ABBR_RE})(?=\s|$|[,.])')
@@ -166,6 +171,21 @@ def convert(text: str, expand_abbr: bool = True) -> str:
     text = _SCORE_PAT.sub(
         lambda m: f"{cardinal(int(m.group(1)), 1)} {cardinal(int(m.group(2)), 1)}", text
     )
+    # Percentage ranges "N–M%" must be handled before general range and pct patterns
+    def _expand_pct_range(m: re.Match) -> str:
+        prev = _prev_word(text, m.start())
+        ctx = _bucket_from_prev(prev) if prev else None
+        bucket = ctx if ctx is not None else 10
+        n1_str, n2_str = m.group(1), m.group(2)
+        def _spell_pct_part(raw: str) -> str:
+            if ',' in raw or '.' in raw:
+                sep = ',' if ',' in raw else '.'
+                int_part, dec_part = raw.split(sep, 1)
+                return fraction(int(int_part), dec_part, bucket)
+            return cardinal(int(raw), bucket)
+        noun = _PROCENT_NOUN.get(bucket, "procenti")
+        return f"{_spell_pct_part(n1_str)} līdz {_spell_pct_part(n2_str)} {noun}"
+    text = _PCT_RANGE_PAT.sub(_expand_pct_range, text)
     # Ranges: use the following noun's bucket for both numbers
     def _expand_range(m: re.Match) -> str:
         bucket = _next_word_bucket(text, m.end())

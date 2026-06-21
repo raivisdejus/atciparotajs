@@ -88,6 +88,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `t.i. pieci` | `tas ir pieci` | ✅ |
 | `15 km dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
 | `15 km. dziļumā` | `piecpadsmit kilometru dziļumā` | ✅ |
+| `600 mm mortīra` | `sešsimt milimetru mortīra` | ✅ |
 
 ## Dates
 
@@ -147,7 +148,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `3000 gadu` | `trīstūkstoš gadu` | ✅ |
 | `5000 gadus` | `piectūkstoš gadus` | ✅ |
 | `10000 cilvēku` | `desmit tūkstoši cilvēku` | ✅ |
+| `10 000 cilvēku` | `desmit tūkstoši cilvēku` | ✅ |
 | `150 000 karavīru` | `simt piecdesmit tūkstoši karavīru` | ✅ |
+| `2 000 000 cilvēku` | `divi miljoni cilvēku` | ✅ |
 
 ## Percentages
 
@@ -162,6 +165,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `sasniedza 5%` | `sasniedza piecus procentus` | ✅ |
 | `par 3,5%` | `par trīs komats pieciem procentiem` | ✅ |
 | `no 5%` | `no piecu procentu` | ✅ |
+| `pārsniedza 15–20%` | `pārsniedza piecpadsmit līdz divdesmit procentus` | ✅ |
 
 ## Scores
 
