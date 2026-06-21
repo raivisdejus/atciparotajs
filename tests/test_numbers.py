@@ -212,7 +212,9 @@ NR_CASES = [
 LPP_CASES = [
     ("58 lpp. gara grāmata",   "piecdesmit astoņas lappuses gara grāmata"),
     ("1 lpp.",                 "viena lappuse"),
-    ("100 lpp.",               "simts lappuses"),
+    ("100 lpp.",               "simts lappušu"),                # gen pl
+    ("11 lpp.",                "vienpadsmit lappušu"),          # teen → gen pl
+    ("21 lpp.",                "divdesmit viena lappuse"),      # ends-in-1 excl. 11 → sg
 ]
 
 # ============================================================

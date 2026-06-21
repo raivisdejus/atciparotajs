@@ -150,8 +150,14 @@ def _expand_unit(m: re.Match) -> str:
 
 def _expand_lpp(m: re.Match) -> str:
     n = int(m.group(1))
-    noun = "lappuse" if n == 1 else "lappuses"
-    return f"{cardinal(n, 2)} {noun}"
+    last2 = n % 100
+    last1 = n % 10
+    if last1 == 1 and last2 != 11:
+        return f"{cardinal(n, 2)} lappuse"
+    elif 2 <= last1 <= 9 and not (10 <= last2 <= 19):
+        return f"{cardinal(n, 3)} lappuses"
+    else:
+        return f"{cardinal(n, 6)} lappušu"
 
 
 def _prev_word(text: str, start: int) -> str | None:

@@ -157,7 +157,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 |-------|----------|--------|
 | `58 lpp. gara grāmata` | `piecdesmit astoņas lappuses gara grāmata` | ✅ |
 | `1 lpp.` | `viena lappuse` | ✅ |
-| `100 lpp.` | `simts lappuses` | ✅ |
+| `100 lpp.` | `simts lappušu` | ✅ |
+| `11 lpp.` | `vienpadsmit lappušu` | ✅ |
+| `21 lpp.` | `divdesmit viena lappuse` | ✅ |
 
 ## Clock Time
 
