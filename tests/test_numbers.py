@@ -500,6 +500,110 @@ CURRENCY_CONVERT_CASES = [
 ]
 
 
+# ============================================================
+# Vīriešu dzimtes kārtas skaitļi (masculine ordinals — subtitle narration)
+# ============================================================
+MASCULINE_ORDINAL_CASES = [
+    ("3. stāvs",        "trešais stāvs"),
+    ("2. kanāls",       "otrais kanāls"),
+    ("1. iemesls",      "pirmais iemesls"),
+    ("3. stāvā",        "trešajā stāvā"),
+    ("5. maijam",       "piektajam maijam"),
+    ("3. stāvam",       "trešajam stāvam"),
+    ("1. vietai",       "pirmajai vietai"),
+    ("par 3. vietu",    "par trešo vietu"),
+    ("1. iemesls",      "pirmais iemesls"),
+]
+
+# ============================================================
+# Reizes (repetitions — common in dialogue)
+# ============================================================
+REPETITION_CASES = [
+    ("1 reize",     "viena reize"),
+    ("2 reizes",    "divas reizes"),
+    ("3 reizes",    "trīs reizes"),
+    ("5 reizes",    "piecas reizes"),
+    ("10 reizes",   "desmit reizes"),
+    ("3 reizēm",    "trim reizēm"),
+]
+
+# ============================================================
+# Pulksteņa laiks ar "plkst." (clock time with plkst. prefix)
+# ============================================================
+CLOCK_TIME_PLKST_CASES = [
+    ("plkst. 10:45",   "plkst. desmitos četrdesmit piecās"),
+    ("plkst. 9:00",    "plkst. deviņos"),
+    ("plkst. 14:30",   "plkst. divos trīsdesmit"),
+]
+
+# ============================================================
+# Sporta rezultāti ar nulli (sports scores with zero)
+# ============================================================
+SCORE_EDGE_CASES = [
+    ("0:0",     "nulle nulle"),
+    ("0:3",     "nulle trīs"),
+    ("10:0",    "desmit nulle"),
+]
+
+# ============================================================
+# Gadsimtu kārtas skaitļi (century ordinals — documentary narration)
+# ============================================================
+ORDINAL_CENTURY_CASES = [
+    ("3. gadsimta sākumā",    "trešā gadsimta sākumā"),
+    ("20. gadsimta sākumā",   "divdesmitā gadsimta sākumā"),
+    ("21. gadsimtā",          "divdesmit pirmajā gadsimtā"),
+]
+
+# ============================================================
+# Procenti ar prievārdiem (percentages with prepositions)
+# ============================================================
+PERCENTAGE_PREPOSITION_CASES = [
+    ("par 5%",    "par pieciem procentiem"),
+    ("līdz 50%",  "līdz piecdesmit procentu"),
+    ("virs 90%",  "virs deviņdesmit procentu"),
+]
+
+# ============================================================
+# Ātrums (speed — km/h)
+# ============================================================
+SPEED_CASES = [
+    ("1 km/h",    "viens kilometrs stundā"),
+    ("2 km/h",    "divi kilometri stundā"),
+    ("11 km/h",   "vienpadsmit kilometru stundā"),
+    ("21 km/h",   "divdesmit viens kilometrs stundā"),
+    ("100 km/h",  "simts kilometru stundā"),
+]
+
+# ============================================================
+# Vecuma ierobežojumi (age-gate labels — "18+")
+# ============================================================
+AGE_GATE_CASES = [
+    ("18+",              "astoņpadsmit plus"),
+    ("16+",              "sešpadsmit plus"),
+    ("6+",               "seši plus"),
+    ("Filma ir 18+",     "Filma ir astoņpadsmit plus"),
+]
+
+# ============================================================
+# Sēriju apzīmējumi (episode notation — "S02E03" must pass through)
+# ============================================================
+EPISODE_NOTATION_CASES = [
+    ("S02E03",           "S02E03"),
+    ("S01E01",           "S01E01"),
+    ("Skatāmies S02E03", "Skatāmies S02E03"),
+]
+
+# ============================================================
+# Mācību gadi (academic year slash range — "2023./2024.")
+# ============================================================
+ACADEMIC_YEAR_CASES = [
+    ("2023./2024. mācību gads",
+     "divi tūkstoši divdesmit trešais līdz divi tūkstoši divdesmit ceturtais mācību gads"),
+    ("2023./2024. mācību gadā",
+     "divi tūkstoši divdesmit trešajā līdz divi tūkstoši divdesmit ceturtajā mācību gadā"),
+]
+
+
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
     assert convert(text) == expected
@@ -659,4 +763,54 @@ def test_no_roman(text, expected):
 
 @pytest.mark.parametrize("text,expected", CLASS_CASES)
 def test_class_notation(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", MASCULINE_ORDINAL_CASES)
+def test_masculine_ordinals(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", REPETITION_CASES)
+def test_repetitions(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", CLOCK_TIME_PLKST_CASES)
+def test_clock_time_plkst(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SCORE_EDGE_CASES)
+def test_score_edge(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", ORDINAL_CENTURY_CASES)
+def test_ordinal_centuries(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", PERCENTAGE_PREPOSITION_CASES)
+def test_percentage_prepositions(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SPEED_CASES)
+def test_speed(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", AGE_GATE_CASES)
+def test_age_gate(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", EPISODE_NOTATION_CASES)
+def test_episode_notation(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", ACADEMIC_YEAR_CASES)
+def test_academic_year(text, expected):
     assert convert(text) == expected

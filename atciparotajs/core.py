@@ -116,6 +116,18 @@ _SIMPLE_FRAC_PAT = re.compile(r'(\d+)/(\d+)')
 # Class notation: "4.D klase", "4.d klasei"
 _CLASS_PAT = re.compile(r'(\d+)\.([A-Za-z])\s+((?:klase|klaš)\w*)', re.IGNORECASE)
 
+# Speed: "100 km/h"
+_SPEED_PAT = re.compile(r'(\d+)\s*km/h(?=\s|$|[,.])')
+
+# Age-gate label: "18+" → "astoņpadsmit plus"
+_AGE_GATE_PAT = re.compile(r'\b(\d+)\+')
+
+# Episode notation: "S02E03" — must be preserved as-is
+_EPISODE_PAT = re.compile(r'\bS\d+E\d+\b', re.IGNORECASE)
+
+# Academic year slash range: "2023./2024."
+_ACAD_YEAR_PAT = re.compile(r'(\d+)\./(\d+)\.(?=\s|$|[,])')
+
 _CURRENCY_SYMBOL_MAP = {'€': 'EUR', '$': 'USD', '£': 'GBP'}
 _CUR_CODES_RE = '|'.join(re.escape(c) for c in sorted(CURRENCY_FORMS, key=len, reverse=True))
 _CUR_AMT = r'(\d+)(?:[,.](\d{1,2}))?'
@@ -171,6 +183,19 @@ def _expand_unit(m: re.Match) -> str:
     else:
         noun, bucket = nom_pl, 8
     return f"{cardinal(n, bucket)} {noun}"
+
+
+def _expand_speed(m: re.Match) -> str:
+    n = int(m.group(1))
+    last2 = n % 100
+    last1 = n % 10
+    if 10 <= last2 <= 19 or last1 == 0:
+        noun, bucket = "kilometru", 6
+    elif last1 == 1:
+        noun, bucket = "kilometrs", 1
+    else:
+        noun, bucket = "kilometri", 8
+    return f"{cardinal(n, bucket)} {noun} stundā"
 
 
 def _expand_lpp(m: re.Match) -> str:
@@ -331,6 +356,11 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
     # Collapse space-separated thousands ("150 000" → "150000") before any numeric processing
     text = _SPACE_THOU_PAT.sub(lambda m: m.group(0).replace(" ", "").replace(" ", ""), text)
     text = _TIME_PAT.sub(lambda m: clock_time(int(m.group(1)), int(m.group(2))), text)
+    # Academic year slash range "2023./2024." before ordinal range pattern
+    def _expand_acad_year(m: re.Match) -> str:
+        bucket = _next_word_bucket(text, m.end())
+        return f"{ordinal(int(m.group(1)), bucket)} līdz {ordinal(int(m.group(2)), bucket)}"
+    text = _ACAD_YEAR_PAT.sub(_expand_acad_year, text)
     # Ordinal ranges like "1941.–1945. gads" must run before general range/ordinal patterns
     def _expand_ord_range(m: re.Match) -> str:
         bucket = _next_word_bucket(text, m.end())
@@ -366,6 +396,8 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
     text = _NEG_PAT.sub(lambda m: "mīnus " + m.group(1), text)
     # Handle superscript units (km², m², m³) before plain unit abbreviations
     text = _SUPER_PAT.sub(_expand_super_unit, text)
+    # Handle speed (km/h) before plain unit abbreviations (which also match "km")
+    text = _SPEED_PAT.sub(_expand_speed, text)
     # Handle unit abbreviations (km, m, kg) before general abbreviation expansion
     text = _UNIT_PAT.sub(_expand_unit, text)
     # Handle tonnes (feminine) — "53T" or "53 T"
@@ -403,6 +435,17 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
     text = _SIMPLE_FRAC_PAT.sub(lambda m: _expand_vulgar_fraction(int(m.group(1)), int(m.group(2))), text)
     # Temperature "36°C", "90°"
     text = _TEMP_PAT.sub(_expand_temp, text)
+    # Age-gate labels "18+" before general pattern
+    text = _AGE_GATE_PAT.sub(lambda m: cardinal(int(m.group(1)), 1) + " plus", text)
+    # Protect episode notation "S02E03" from being mangled by PATTERN
+    _ep_store: dict[str, str] = {}
+    _ep_alpha = "abcdefghijklmnopqrstuvwxyz"
+    def _protect_ep(m: re.Match) -> str:
+        idx = len(_ep_store)
+        key = f"\x00ep{_ep_alpha[idx % 26]}\x00"
+        _ep_store[key] = m.group(0)
+        return key
+    text = _EPISODE_PAT.sub(_protect_ep, text)
 
     def replace(m):
         bucket = _next_word_bucket(text, m.end())
@@ -435,4 +478,7 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
             return cardinal(int(m.group(6)), bucket)
         return m.group(0)
 
-    return PATTERN.sub(replace, text)
+    text = PATTERN.sub(replace, text)
+    for key, val in _ep_store.items():
+        text = text.replace(key, val)
+    return text

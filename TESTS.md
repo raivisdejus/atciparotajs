@@ -422,3 +422,94 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `4.d klasei` | `ceturtajai d klasei` | ✅ |
 | `1.A klase` | `pirmā a klase` | ✅ |
 | `10.B klase` | `desmitā b klase` | ✅ |
+
+## Masculine Ordinals
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `3. stāvs` | `trešais stāvs` | ✅ |
+| `2. kanāls` | `otrais kanāls` | ✅ |
+| `1. iemesls` | `pirmais iemesls` | ✅ |
+| `3. stāvā` | `trešajā stāvā` | ✅ |
+| `5. maijam` | `piektajam maijam` | ✅ |
+| `3. stāvam` | `trešajam stāvam` | ✅ |
+| `1. vietai` | `pirmajai vietai` | ✅ |
+| `par 3. vietu` | `par trešo vietu` | ✅ |
+| `1. iemesls ir klimata pārmaiņas` | `pirmais iemesls ir klimata pārmaiņas` | ✅ |
+
+## Repetitions
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `1 reize` | `viena reize` | ✅ |
+| `2 reizes` | `divas reizes` | ✅ |
+| `3 reizes` | `trīs reizes` | ✅ |
+| `5 reizes` | `piecas reizes` | ✅ |
+| `10 reizes` | `desmit reizes` | ✅ |
+| `3 reizēm` | `trim reizēm` | ✅ |
+
+## Clock Time Plkst
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `plkst. 10:45` | `plkst. desmitos četrdesmit piecās` | ✅ |
+| `plkst. 9:00` | `plkst. deviņos` | ✅ |
+| `plkst. 14:30` | `plkst. divos trīsdesmit` | ✅ |
+
+## Score Edge
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `0:0` | `nulle nulle` | ✅ |
+| `0:3` | `nulle trīs` | ✅ |
+| `10:0` | `desmit nulle` | ✅ |
+
+## Ordinal Centuries
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `3. gadsimta sākumā` | `trešā gadsimta sākumā` | ✅ |
+| `20. gadsimta sākumā` | `divdesmitā gadsimta sākumā` | ✅ |
+| `21. gadsimtā` | `divdesmit pirmajā gadsimtā` | ✅ |
+
+## Percentage Prepositions
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `par 5%` | `par pieciem procentiem` | ✅ |
+| `līdz 50%` | `līdz piecdesmit procentu` | ✅ |
+| `virs 90%` | `virs deviņdesmit procentu` | ✅ |
+
+## Speed
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `1 km/h` | `viens kilometrs stundā` | ✅ |
+| `2 km/h` | `divi kilometri stundā` | ✅ |
+| `11 km/h` | `vienpadsmit kilometru stundā` | ✅ |
+| `21 km/h` | `divdesmit viens kilometrs stundā` | ✅ |
+| `100 km/h` | `simts kilometru stundā` | ✅ |
+
+## Age Gate
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `18+` | `astoņpadsmit plus` | ✅ |
+| `16+` | `sešpadsmit plus` | ✅ |
+| `6+` | `seši plus` | ✅ |
+| `Filma ir 18+` | `Filma ir astoņpadsmit plus` | ✅ |
+
+## Episode Notation
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `S02E03` | `S02E03` | ✅ |
+| `S01E01` | `S01E01` | ✅ |
+| `Skatāmies S02E03` | `Skatāmies S02E03` | ✅ |
+
+## Academic Year
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `2023./2024. mācību gads` | `divi tūkstoši divdesmit trešais līdz divi tūkstoši divdesmit ceturtais mācību gads` | ✅ |
+| `2023./2024. mācību gadā` | `divi tūkstoši divdesmit trešajā līdz divi tūkstoši divdesmit ceturtajā mācību gadā` | ✅ |
