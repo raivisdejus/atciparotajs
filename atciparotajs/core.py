@@ -76,14 +76,14 @@ _PCT_PAT = re.compile(r'(\d+(?:[.,]\d+)?)\s*%')
 
 # Noun forms of "procents" indexed by grammatical bucket
 _PROCENT_NOUN = {
-    1: "procents", 6: "procentu", 7: "procentā",
+    1: "procents", 2: "procenta", 6: "procentu", 7: "procentā",
     8: "procenti",  9: "procentiem", 10: "procentus", 11: "procentos",
 }
 
 # Prepositions and the case bucket they govern for a following percentage
 _PCT_PREPS = {
     "par": 9, "ar": 9, "līdz": 9,
-    "no": 6, "pēc": 6, "pie": 6, "virs": 6, "zem": 6, "pirms": 6,
+    "no": 9, "pēc": 6, "pie": 6, "virs": 6, "zem": 6, "pirms": 6,
     "ap": 10,
 }
 
@@ -305,10 +305,18 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
     n = int(raw)
     last2 = n % 100
     last1 = n % 10
+    # If context is accusative (verb heuristic) but a noun follows, use genitive (attribute)
+    if ctx == 10:
+        rest = full_text[m.end():]
+        if LAT_WORD.search(rest):
+            ctx = 6
     # 10–19 and multiples of 10 always take genitive plural — context does not override
     if 10 <= last2 <= 19 or last1 == 0:
         return cardinal(n, 6) + " procentu"
     if last1 == 1:
+        # With preposition context use genitive singular, otherwise nominative singular
+        if ctx is not None:
+            return cardinal(n, 2) + " " + _PROCENT_NOUN[2]
         return cardinal(n, 1) + " procents"
     # 2–9 range: use context bucket if available
     bucket = ctx if ctx is not None else 8

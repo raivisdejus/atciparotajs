@@ -205,7 +205,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `Inflācija sasniedza 3,5 procentus` | `Inflācija sasniedza trīs komats piecus procentus` | ✅ |
 | `sasniedza 5%` | `sasniedza piecus procentus` | ✅ |
 | `par 3,5%` | `par trīs komats pieciem procentiem` | ✅ |
-| `no 5%` | `no piecu procentu` | ✅ |
+| `no 1%` | `no viena procenta` | ✅ |
+| `no 5%` | `no pieciem procentiem` | ✅ |
+| `pārsniedza 5% slieksni` | `pārsniedza piecu procentu slieksni` | ✅ |
 | `pārsniedza 15–20%` | `pārsniedza piecpadsmit līdz divdesmit procentus` | ✅ |
 | `6.—9. augustā` | `sestajā līdz devītajā augustā` | ✅ |
 
@@ -435,7 +437,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `3. stāvam` | `trešajam stāvam` | ✅ |
 | `1. vietai` | `pirmajai vietai` | ✅ |
 | `par 3. vietu` | `par trešo vietu` | ✅ |
-| `1. iemesls ir klimata pārmaiņas` | `pirmais iemesls ir klimata pārmaiņas` | ✅ |
+| `1. iemesls` | `pirmais iemesls` | ✅ |
 
 ## Repetitions
 

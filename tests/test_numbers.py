@@ -265,11 +265,13 @@ PERCENTAGE_CASES = [
     ("Inflācija sasniedza 3,5 procentus",
      "Inflācija sasniedza trīs komats piecus procentus"),
     # context-aware cases
-    ("sasniedza 5%",        "sasniedza piecus procentus"),
-    ("par 3,5%",            "par trīs komats pieciem procentiem"),
-    ("no 5%",               "no piecu procentu"),
-    ("pārsniedza 15–20%",   "pārsniedza piecpadsmit līdz divdesmit procentus"),
-    ("6.—9. augustā",       "sestajā līdz devītajā augustā"), # Note. different dash (-)
+    ("sasniedza 5%",           "sasniedza piecus procentus"),
+    ("par 3,5%",               "par trīs komats pieciem procentiem"),
+    ("no 1%",                  "no viena procenta"),
+    ("no 5%",                  "no pieciem procentiem"),
+    ("pārsniedza 5% slieksni", "pārsniedza piecu procentu slieksni"),
+    ("pārsniedza 15–20%",      "pārsniedza piecpadsmit līdz divdesmit procentus"),
+    ("6.—9. augustā",          "sestajā līdz devītajā augustā"), # Note. different dash (-)
 ]
 
 # ============================================================
