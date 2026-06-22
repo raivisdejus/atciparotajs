@@ -296,6 +296,12 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
     prev = _prev_word(full_text, m.start())
     ctx = _bucket_from_prev(prev) if prev else None
 
+    # If context is accusative (verb heuristic) but a noun follows, use genitive (attribute)
+    if ctx == 10:
+        rest = full_text[m.end():]
+        if LAT_WORD.search(rest):
+            ctx = 6
+
     if ',' in raw or '.' in raw:
         sep = ',' if ',' in raw else '.'
         int_part, dec_part = raw.split(sep, 1)
@@ -305,11 +311,6 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
     n = int(raw)
     last2 = n % 100
     last1 = n % 10
-    # If context is accusative (verb heuristic) but a noun follows, use genitive (attribute)
-    if ctx == 10:
-        rest = full_text[m.end():]
-        if LAT_WORD.search(rest):
-            ctx = 6
     # 10–19 and multiples of 10 always take genitive plural — context does not override
     if 10 <= last2 <= 19 or last1 == 0:
         return cardinal(n, 6) + " procentu"
