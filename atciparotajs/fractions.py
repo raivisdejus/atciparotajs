@@ -4,12 +4,14 @@ from atciparotajs.cardinals import cardinal
 _FEMININE_BUCKETS = {2, 3, 5, 12, 13}
 
 
+# For plural buckets the integer part stays in nominative singular (gender-matched);
+# for singular/accusative buckets the integer part follows the same case as the noun.
+_PLURAL_BUCKETS = {3, 8, 9, 11}
+
+
 def fraction(integer_part: int, decimal_str: str, bucket: int = 1) -> str:
-    """Convert decimal number to Latvian words.
-    Both integer and decimal parts use nominative form matching the noun's gender:
-    feminine (buckets 2,3,5,12,13) → bucket 2; masculine → bucket 1.
-    """
     gender_bucket = 2 if bucket in _FEMININE_BUCKETS else 1
+    int_bucket = gender_bucket if bucket in _PLURAL_BUCKETS else bucket
     dec_int = int(decimal_str)
-    parts = [cardinal(integer_part, gender_bucket), "komats", cardinal(dec_int, bucket)]
+    parts = [cardinal(integer_part, int_bucket), "komats", cardinal(dec_int, bucket)]
     return " ".join(parts)

@@ -262,6 +262,8 @@ PERCENTAGE_CASES = [
     ("0,5%",                "nulle komats pieci procenti"),
     ("Inflācija sasniedza 3,5%",
      "Inflācija sasniedza trīs komats piecus procentus"),
+    ("Inflācija sasniedza 2.5%",
+     "Inflācija sasniedza divus komats piecus procentus"),
     ("Inflācija sasniedza 3,5 procentus",
      "Inflācija sasniedza trīs komats piecus procentus"),
     # context-aware cases
