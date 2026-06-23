@@ -92,6 +92,8 @@ _PCT_PREPS_ONE = {"par": 6}
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
+# Capital-letter word following a dot+space — indicates a surname after an initial
+_CAP_WORD_AFTER = re.compile(r'^\s+[A-ZĀČĒĢĪĶĻŅŠŪŽ]')
 
 # Currency patterns — amount with symbol or ISO code
 # Tonne: "53T" or "53 T" → "piecdesmit trīs tonnas" (feminine)
@@ -481,8 +483,11 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
             if no_roman:
                 return m.group(0)
             s = m.group(4)
-            # Single uppercase letter after a word is likely a surname initial, not Roman
-            if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):
+            # Single uppercase letter before/after a capitalized word is likely a name initial
+            if len(s) == 1 and (
+                _WORD_BEFORE.search(text[:m.start()])
+                or _CAP_WORD_AFTER.match(text[m.end():])
+            ):
                 return m.group(0)
             if is_valid_roman(s):
                 return ordinal(roman_to_int(s), bucket)
@@ -491,8 +496,11 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
             if no_roman:
                 return m.group(0)
             s = m.group(5)
-            # Single uppercase letter after a word is likely a surname initial, not Roman
-            if len(s) == 1 and _WORD_BEFORE.search(text[:m.start()]):
+            # Single uppercase letter before/after a capitalized word is likely a name initial
+            if len(s) == 1 and (
+                _WORD_BEFORE.search(text[:m.start()])
+                or _CAP_WORD_AFTER.match(text[m.end():])
+            ):
                 return m.group(0)
             if is_valid_roman(s):
                 return ordinal(roman_to_int(s), bucket)

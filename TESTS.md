@@ -143,6 +143,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | Input | Expected | Result |
 |-------|----------|--------|
 | `Kārlis V. uzvarēja` | `Kārlis V. uzvarēja` | ✅ |
+| `V. Bērziņš uzvarēja` | `V. Bērziņš uzvarēja` | ✅ |
 | `Jānis A. sacīja` | `Jānis A. sacīja` | ✅ |
 
 ## Nr Keeps Digits

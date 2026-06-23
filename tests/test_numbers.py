@@ -196,6 +196,7 @@ DATE_CASES = [
 INITIAL_CASES = [
     # "V." after a name is a surname initial, not Roman numeral V (= 5)
     ("Kārlis V. uzvarēja",     "Kārlis V. uzvarēja"),
+    ("V. Bērziņš uzvarēja",    "V. Bērziņš uzvarēja"),
     ("Jānis A. sacīja",        "Jānis A. sacīja"),
 ]
 
