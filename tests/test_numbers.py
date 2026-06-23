@@ -226,11 +226,11 @@ LPP_CASES = [
 TIME_CASES = [
     ("Vilciens pienāks 10:45",  "Vilciens pienāks desmitos četrdesmit piecās"),
     ("Pulksten 1:00",           "Pulksten vienos"),
-    ("Sanāksme sākas 14:30",    "Sanāksme sākas divos trīsdesmit"),
+    ("Sanāksme sākas 14:30",    "Sanāksme sākas četrpadsmitos trīsdesmit"),
     ("9:05",                    "deviņos piecās"),
     ("8:00",                    "astoņos"),
     ("12:00",                   "divpadsmitos"),
-    ("23:59",                   "vienpadsmitos piecdesmit deviņās"),
+    ("23:59",                   "divdesmit trijos piecdesmit deviņās"),
 ]
 
 # ============================================================
@@ -537,7 +537,7 @@ REPETITION_CASES = [
 CLOCK_TIME_PLKST_CASES = [
     ("plkst. 10:45",   "pulksten desmitos četrdesmit piecās"),
     ("plkst. 9:00",    "pulksten deviņos"),
-    ("plkst. 14:30",   "pulksten divos trīsdesmit"),
+    ("plkst. 14:30",   "pulksten četrpadsmitos trīsdesmit"),
 ]
 
 # ============================================================
