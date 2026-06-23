@@ -439,6 +439,7 @@ TEMPERATURE_CASES = [
 TONNE_CASES = [
     ("53T",     "piecdesmit trīs tonnas"),
     ("1T",      "viena tonna"),
+    ("1 T",      "viena tonna"),
     ("10T",     "desmit tonnu"),
     ("21T",     "divdesmit viena tonna"),
     ("5 T",     "piecas tonnas"),
