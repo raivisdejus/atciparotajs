@@ -52,8 +52,14 @@ _UNIT_MAP = {
     "m.":  ("metrs",      "metri",      "metru"),
     "kg":  ("kilograms",  "kilogrami",  "kilogramu"),
     "kg.": ("kilograms",  "kilogrami",  "kilogramu"),
+    "cm":  ("centimetrs", "centimetri", "centimetru"),
+    "cm.": ("centimetrs", "centimetri", "centimetru"),
     "mm":  ("milimetrs",  "milimetri",  "milimetru"),
     "mm.": ("milimetrs",  "milimetri",  "milimetru"),
+    "ml":  ("mililits",   "mililitri",  "mililitru"),
+    "ml.": ("mililits",   "mililitri",  "mililitru"),
+    "g":   ("grams",      "grami",      "gramu"),
+    "g.":  ("grams",      "grami",      "gramu"),
 }
 _UNIT_ABBR_RE = "|".join(re.escape(k) for k in sorted(_UNIT_MAP, key=len, reverse=True))
 _UNIT_PAT = re.compile(rf'(\d+)\s+({_UNIT_ABBR_RE})(?=\s|$|[,.])')

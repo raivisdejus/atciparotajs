@@ -51,6 +51,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `3 kaķi` | `trīs kaķi` | ✅ |
 | `21 diena` | `divdesmit viena diena` | ✅ |
 | `100 grami` | `simts grami` | ✅ |
+| `100 gramu` | `simts gramu` | ✅ |
 | `Man ir 30` | `Man ir trīsdesmit` | ✅ |
 | `Viņam ir 25 gadi` | `Viņam ir divdesmit pieci gadi` | ✅ |
 | `Viņai bija 18 gadu` | `Viņai bija astoņpadsmit gadu` | ✅ |
@@ -122,6 +123,10 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `3 m³` | `trīs kubikmetri` | ✅ |
 | `1 m³` | `viens kubikmetrs` | ✅ |
 | `20 m³` | `divdesmit kubikmetru` | ✅ |
+| `100 g kultūras` | `simts gramu kultūras` | ✅ |
+| `10 ml` | `desmit mililitru` | ✅ |
+| `10 cm` | `desmit centimetru` | ✅ |
+| `10 mm` | `desmit milimetru` | ✅ |
 
 ## Dates
 

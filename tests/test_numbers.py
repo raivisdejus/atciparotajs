@@ -87,6 +87,7 @@ CARDINAL_CASES = [
     ("3 kaķi",              "trīs kaķi"),               # nom masc pl
     ("21 diena",            "divdesmit viena diena"),   # nom fem sg
     ("100 grami",           "simts grami"),             # nom masc pl
+    ("100 gramu",           "simts gramu"),             # gen masc pl
     ("Man ir 30",           "Man ir trīsdesmit"),       # standalone, no following noun
     ("Viņam ir 25 gadi",    "Viņam ir divdesmit pieci gadi"),   # age in sentence
     ("Viņai bija 18 gadu",  "Viņai bija astoņpadsmit gadu"),    # gen pl age
@@ -162,6 +163,10 @@ ABBREVIATION_CASES = [
     ("3 m³",                "trīs kubikmetri"),
     ("1 m³",                "viens kubikmetrs"),
     ("20 m³",               "divdesmit kubikmetru"),
+    ("100 g kultūras",      "simts gramu kultūras"),
+    ("10 ml",               "desmit mililitru"),
+    ("10 cm",               "desmit centimetru"),
+    ("10 mm",               "desmit milimetru"),
 ]
 
 # ============================================================
