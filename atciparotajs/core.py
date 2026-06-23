@@ -83,9 +83,12 @@ _PROCENT_NOUN = {
 # Prepositions and the case bucket they govern for a following percentage
 _PCT_PREPS = {
     "par": 9, "ar": 9, "līdz": 9,
-    "no": 9, "pēc": 6, "pie": 6, "virs": 6, "zem": 6, "pirms": 6,
+    "no": 9, "pēc": 6, "pie": 6, "virs": 9, "zem": 6, "pirms": 6,
     "ap": 10,
 }
+
+# For n=1 (singular), some prepositions require accusative sg (bucket 6) rather than gen sg (bucket 2)
+_PCT_PREPS_ONE = {"par": 6}
 
 # Single word preceding a Roman-numeral candidate (to detect surname initials)
 _WORD_BEFORE = re.compile(r'\w+\s+$')
@@ -311,10 +314,16 @@ def _expand_pct(m: re.Match, full_text: str) -> str:
     n = int(raw)
     last2 = n % 100
     last1 = n % 10
-    # 10–19 and multiples of 10 always take genitive plural — context does not override
     if 10 <= last2 <= 19 or last1 == 0:
+        if ctx is not None:
+            return cardinal(n, ctx) + " " + _PROCENT_NOUN[ctx]
         return cardinal(n, 6) + " procentu"
     if last1 == 1:
+        if prev:
+            pw = prev.lower()
+            if pw in _PCT_PREPS_ONE:
+                b = _PCT_PREPS_ONE[pw]
+                return cardinal(n, b) + " " + _PROCENT_NOUN[b]
         # With preposition context use genitive singular, otherwise nominative singular
         if ctx is not None:
             return cardinal(n, 2) + " " + _PROCENT_NOUN[2]

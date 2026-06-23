@@ -69,6 +69,7 @@ TWO_CASES = [
 ELEVEN_CASES = [
     ("11 suņi",             "vienpadsmit suņi"),        # nom masc pl
     ("11 mājas",            "vienpadsmit mājas"),       # nom fem pl
+    ("11 māju",             "vienpadsmit māju"),
     ("11 suņiem",           "vienpadsmit suņiem"),      # dat masc pl
     ("11 mājām",            "vienpadsmit mājām"),       # dat fem pl
     ("11 suņus",            "vienpadsmit suņus"),       # acc masc pl
@@ -560,9 +561,10 @@ ORDINAL_CENTURY_CASES = [
 # Procenti ar prievārdiem (percentages with prepositions)
 # ============================================================
 PERCENTAGE_PREPOSITION_CASES = [
+    ("par 1%",    "par vienu procentu"),
     ("par 5%",    "par pieciem procentiem"),
-    ("līdz 50%",  "līdz piecdesmit procentu"),
-    ("virs 90%",  "virs deviņdesmit procentu"),
+    ("līdz 50%",  "līdz piecdesmit procentiem"),
+    ("virs 90%",  "virs deviņdesmit procentiem"),
 ]
 
 # ============================================================

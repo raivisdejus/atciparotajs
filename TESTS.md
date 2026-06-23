@@ -34,6 +34,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 |-------|----------|--------|
 | `11 suņi` | `vienpadsmit suņi` | ✅ |
 | `11 mājas` | `vienpadsmit mājas` | ✅ |
+| `11 māju` | `vienpadsmit māju` | ✅ |
 | `11 suņiem` | `vienpadsmit suņiem` | ✅ |
 | `11 mājām` | `vienpadsmit mājām` | ✅ |
 | `11 suņus` | `vienpadsmit suņus` | ✅ |
@@ -480,9 +481,10 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 
 | Input | Expected | Result |
 |-------|----------|--------|
+| `par 1%` | `par vienu procentu` | ✅ |
 | `par 5%` | `par pieciem procentiem` | ✅ |
-| `līdz 50%` | `līdz piecdesmit procentu` | ✅ |
-| `virs 90%` | `virs deviņdesmit procentu` | ✅ |
+| `līdz 50%` | `līdz piecdesmit procentiem` | ✅ |
+| `virs 90%` | `virs deviņdesmit procentiem` | ✅ |
 
 ## Speed
 
