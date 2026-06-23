@@ -305,6 +305,7 @@ PHONE_CASES = [
     ("tel: 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
     ("tel 67 030 638",       "seši septiņi nulle trīs nulle seši trīs astoņi"),
     ("tel.67030638",         "seši septiņi nulle trīs nulle seši trīs astoņi"),
+    ("tālr. 67030638",       "seši septiņi nulle trīs nulle seši trīs astoņi"),
     ("mob. 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),
     ("mob: 67030638",        "seši septiņi nulle trīs nulle seši trīs astoņi"),
     ("+371 67 030 638",      "seši septiņi nulle trīs nulle seši trīs astoņi"),

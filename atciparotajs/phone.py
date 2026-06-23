@@ -16,7 +16,7 @@ _EXPLICIT_PAT = re.compile(r'\{phone:(\d+)\}')
 
 # tel/mob prefix: tel. tel: tel followed by optional +371 and digits
 _PREFIX_PAT = re.compile(
-    r'(?i)(?:tel|mob)[.:\s]\s*(?:\+371[\s-]?)?(\d[\d\s\-]{5,})',
+    r'(?i)(?:tel|mob|tālr)[.:\s]\s*(?:\+371[\s-]?)?(\d[\d\s\-]{5,})',
 )
 
 # +371 international prefix without tel/mob

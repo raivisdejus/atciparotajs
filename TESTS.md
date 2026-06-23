@@ -242,6 +242,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `tel: 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `tel 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `tel.67030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
+| `tālr. 67030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `mob. 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `mob: 67030638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
 | `+371 67 030 638` | `seši septiņi nulle trīs nulle seši trīs astoņi` | ✅ |
@@ -262,8 +263,6 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `(1, 50, 'EUR')` | `viens eiro un piecdesmit centu` | ✅ |
 | `(10, 99, 'EUR')` | `desmit eiro un deviņdesmit deviņi centi` | ✅ |
 | `(100, 0, 'EUR')` | `simts eiro` | ✅ |
-| `(1, 0, 'EUR_LEGAL')` | `viens euro` | ✅ |
-| `(3, 0, 'EUR_LEGAL')` | `trīs euro` | ✅ |
 | `(1, 0, 'USD')` | `viens dolārs` | ✅ |
 | `(2, 0, 'USD')` | `divi dolāri` | ✅ |
 | `(10, 0, 'USD')` | `desmit dolāru` | ✅ |
