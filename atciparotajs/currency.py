@@ -9,7 +9,6 @@ CURRENCY_FORMS = {
     'AUD': (GENERIC_DOLLARS, GENERIC_CENTS),
     'CAD': (GENERIC_DOLLARS, GENERIC_CENTS),
     'EUR': (('eiro', 'eiro', 'eiro'), GENERIC_CENTS),
-    'EUR_LEGAL': (('euro', 'euro', 'euro'), GENERIC_CENTS),
     'GBP': (('sterliņu mārciņa', 'sterliņu mārciņas', 'sterliņu mārciņu'),
             ('penss', 'pensi', 'pensu')),
     'LTL': (('lits', 'liti', 'litu'), GENERIC_CENTS),

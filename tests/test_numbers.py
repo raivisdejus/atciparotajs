@@ -377,9 +377,6 @@ CURRENCY_CASES = [
     ((1,   50,  'EUR'), "viens eiro un piecdesmit centu"),
     ((10,  99,  'EUR'), "desmit eiro un deviņdesmit deviņi centi"),
     ((100,  0,  'EUR'), "simts eiro"),
-    # EUR_LEGAL — "euro"
-    ((1,    0,  'EUR_LEGAL'), "viens euro"),
-    ((3,    0,  'EUR_LEGAL'), "trīs euro"),
     # USD — masculine: dolārs/dolāri/dolāru
     ((1,    0,  'USD'), "viens dolārs"),
     ((2,    0,  'USD'), "divi dolāri"),
