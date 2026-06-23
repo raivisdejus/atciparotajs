@@ -7,6 +7,7 @@ ABBREVIATIONS = {
     "mg.":    "miligrams",
     "ml.":    "mililitrs",
     "l.":     "litrs",
+    "Nr.":    "numur",
     "nr.":    "numur",
     "lpp.":   "lappuse",
     "u.c.":   "un citi",

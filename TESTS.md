@@ -151,6 +151,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 |-------|----------|--------|
 | `Vilciens nr. 67` | `Vilciens numur sešdesmit septiņi` | ✅ |
 | `Autobuss nr. 3` | `Autobuss numur trīs` | ✅ |
+| `Autobuss Nr. 3` | `Autobuss numur trīs` | ✅ |
 
 ## Lpp Plural
 

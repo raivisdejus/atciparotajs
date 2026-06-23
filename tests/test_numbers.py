@@ -205,6 +205,7 @@ INITIAL_CASES = [
 NR_CASES = [
     ("Vilciens nr. 67",        "Vilciens numur sešdesmit septiņi"),
     ("Autobuss nr. 3",         "Autobuss numur trīs"),
+    ("Autobuss Nr. 3",         "Autobuss numur trīs"),
 ]
 
 # ============================================================
