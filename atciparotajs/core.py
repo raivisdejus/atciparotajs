@@ -128,6 +128,9 @@ _AGE_GATE_PAT = re.compile(r'\b(\d+)\+')
 # Episode notation: "S02E03" — must be preserved as-is
 _EPISODE_PAT = re.compile(r'\bS\d+E\d+\b', re.IGNORECASE)
 
+# "sezona N" — cardinal N after the word "sezona" → ordinal before: "otrā sezona"
+_SEASON_CARDINAL_PAT = re.compile(r'\b(sezona)\s+(\d+)\b', re.IGNORECASE)
+
 # Academic year slash range: "2023./2024."
 _ACAD_YEAR_PAT = re.compile(r'(\d+)\./(\d+)\.(?=\s|$|[,])')
 
@@ -455,6 +458,8 @@ def convert(text: str, expand_abbr: bool = True, no_roman: bool = False) -> str:
     text = _TEMP_PAT.sub(_expand_temp, text)
     # Age-gate labels "18+" before general pattern
     text = _AGE_GATE_PAT.sub(lambda m: cardinal(int(m.group(1)), 1) + " plus", text)
+    # "sezona 2" → "otrā sezona" (cardinal after "sezona" treated as ordinal, word order flipped)
+    text = _SEASON_CARDINAL_PAT.sub(lambda m: ordinal(int(m.group(2)), 2) + " " + m.group(1).lower(), text)
     # Protect episode notation "S02E03" from being mangled by PATTERN
     _ep_store: dict[str, str] = {}
     _ep_alpha = "abcdefghijklmnopqrstuvwxyz"

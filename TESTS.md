@@ -354,7 +354,7 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `10. sērija` | `desmitā sērija` | ✅ |
 | `21. sērija` | `divdesmit pirmā sērija` | ✅ |
 | `4. daļa` | `ceturtā daļa` | ✅ |
-| `Sezona 2, 3. sērija` | `Sezona divas, trešā sērija` | ✅ |
+| `sezona 2, 3. sērija` | `otrā sezona, trešā sērija` | ✅ |
 
 ## Decades
 
