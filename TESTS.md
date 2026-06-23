@@ -457,9 +457,9 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 
 | Input | Expected | Result |
 |-------|----------|--------|
-| `plkst. 10:45` | `plkst. desmitos četrdesmit piecās` | ✅ |
-| `plkst. 9:00` | `plkst. deviņos` | ✅ |
-| `plkst. 14:30` | `plkst. divos trīsdesmit` | ✅ |
+| `plkst. 10:45` | `pulksten desmitos četrdesmit piecās` | ✅ |
+| `plkst. 9:00` | `pulksten deviņos` | ✅ |
+| `plkst. 14:30` | `pulksten divos trīsdesmit` | ✅ |
 
 ## Score Edge
 

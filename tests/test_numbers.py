@@ -534,9 +534,9 @@ REPETITION_CASES = [
 # Pulksteņa laiks ar "plkst." (clock time with plkst. prefix)
 # ============================================================
 CLOCK_TIME_PLKST_CASES = [
-    ("plkst. 10:45",   "plkst. desmitos četrdesmit piecās"),
-    ("plkst. 9:00",    "plkst. deviņos"),
-    ("plkst. 14:30",   "plkst. divos trīsdesmit"),
+    ("plkst. 10:45",   "pulksten desmitos četrdesmit piecās"),
+    ("plkst. 9:00",    "pulksten deviņos"),
+    ("plkst. 14:30",   "pulksten divos trīsdesmit"),
 ]
 
 # ============================================================

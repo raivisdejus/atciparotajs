@@ -12,6 +12,7 @@ ABBREVIATIONS = {
     "u.c.":   "un citi",
     "u.tml.": "un tamlīdzīgi",
     "t.i.":   "tas ir",
+    "plkst.": "pulksten",
     "pr.Kr.": "pirms Kristus",
     "p.Kr.":  "pēc Kristus",
 }
