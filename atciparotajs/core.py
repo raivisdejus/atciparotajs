@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from atciparotajs.endings import detect_bucket
 from atciparotajs.cardinals import cardinal
