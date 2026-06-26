@@ -2,7 +2,7 @@
 
 Latvian text preprocessor for TTS engines. Converts digits, numbers, and abbreviations to spoken Latvian words.
 
-Numbers are inflected to agree in gender and grammatical case with the following noun — for example, `2 draugiem` → `diviem draugiem`.
+Numbers are inflected to agree in gender and grammatical case with the following noun.
 
 ## Features
 
@@ -11,7 +11,7 @@ Numbers are inflected to agree in gender and grammatical case with the following
 - **Roman numerals** — `XIV gs.` → `četrpadsmitais gadsimts`
 - **Decimals/fractions** — `21,5 grami` → `divdesmit viens komats pieci grami`
 - **Abbreviation expansion** — `gs.` → `gadsimts`, `km.` → `kilometrs`, and more
-- **Phone numbers** — spelled out digit by digit (see below)
+- **Phone numbers** — spelled out digit by digit `{phone:67030638}` → `seši septiņi nulle trīs nulle seši trīs astoņi`
 
 ## Installation
 
@@ -77,7 +77,7 @@ no recognizable phone prefix.
 pytest tests/test_numbers.py -v
 ```
 
-For test cases covered see [test list](TESTS.md) 
+For test cases covered see [test list](https://github.com/raivisdejus/atciparotajs/blob/main/TESTS.md) 
 
 ## Testing with TTS
 For real life TTS testing go to [Latvian-Piper-TTS](https://huggingface.co/spaces/RaivisDejus/Latvian-Piper-TTS) 
