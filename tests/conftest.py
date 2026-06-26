@@ -1,5 +1,7 @@
 """pytest plugin: generate TESTS.md after every test run."""
 
+from __future__ import annotations
+
 import pathlib
 import pytest
 
