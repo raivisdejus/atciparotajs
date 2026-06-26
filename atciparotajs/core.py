@@ -31,8 +31,8 @@ _SCORE_PAT = re.compile(r'\b(\d+):(\d+)\b')
 # Ordinal year range "N.–M." (e.g. "1941.–1945. gads")
 _ORD_RANGE_PAT = re.compile(r'(\d+)\.[–\-—](\d+)\.(?=\s|$)')
 
-# Undotted year range "NNNN–NNNN gad…" (e.g. "1941–1945 gads")
-_YEAR_RANGE_PAT = re.compile(r'\b(\d{4})[–\-—](\d{4})(?=\s+gad)')
+# Undotted year range "NNNN–NNNN gad…" (e.g. "1941–1945 gads", "1941 – 1945 gads")
+_YEAR_RANGE_PAT = re.compile(r'\b(\d{4})\s*[–\-—]\s*(\d{4})(?=\s+gad)')
 
 # Number range "N–M" or "N-M" (hyphen/en-dash not preceded by start-of-range digit already consumed)
 _RANGE_PAT = re.compile(r'\b(\d+)[–\-—](\d+)\b')

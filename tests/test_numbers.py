@@ -188,6 +188,8 @@ DATE_CASES = [
      "tūkstoš deviņsimt četrdesmit pirmajā līdz tūkstoš deviņsimt četrdesmit piektajā gadā"),
     ("1941–1945 gadā",
      "tūkstoš deviņsimt četrdesmit pirmajā līdz tūkstoš deviņsimt četrdesmit piektajā gadā"),
+    ("1941 – 1945 gadā",
+     "tūkstoš deviņsimt četrdesmit pirmajā līdz tūkstoš deviņsimt četrdesmit piektajā gadā"),
     ("1927. un 1928. gadā",
      "tūkstoš deviņsimt divdesmit septītajā un tūkstoš deviņsimt divdesmit astotajā gadā"),
     ("no 1942. gada 4. jūnija līdz 7. jūnijam",
