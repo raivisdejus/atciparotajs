@@ -715,3 +715,164 @@ Auto-generated after each `pytest` run. Shows every parametrised case with its l
 | `9.60` | `deviņi komats sešdesmit` | ✅ |
 | `3.–5. klase` | `trešā līdz piektā klase` | ✅ |
 | `1. – 2. vieta` | `pirmā – otrā vieta` | ✅ |
+
+## Ordinal Without Space
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `2026.gada augusts` | `divi tūkstoši divdesmit sestā gada augusts` | ✅ |
+| `2026.gadā` | `divi tūkstoši divdesmit sestajā gadā` | ✅ |
+| `2026.g.` | `divi tūkstoši divdesmit sestais gads` | ✅ |
+| `15.augustā` | `piecpadsmitajā augustā` | ✅ |
+| `3.vieta` | `trešā vieta` | ✅ |
+| `1.klase` | `pirmā klase` | ✅ |
+| `2.pants` | `otrais pants` | ✅ |
+| `XX.gadsimts` | `divdesmitais gadsimts` | ✅ |
+| `2026.gada 5.maijā` | `divi tūkstoši divdesmit sestā gada piektajā maijā` | ✅ |
+| `(2026.gada)` | `(divi tūkstoši divdesmit sestā gada)` | ✅ |
+| `2026.gada.` | `divi tūkstoši divdesmit sestā gada.` | ✅ |
+| `3., 4. vieta` | `trešā, ceturtā vieta` | ✅ |
+| `3.,4.vieta` | `trešā,ceturtā vieta` | ✅ |
+| `1941.-1945.gads` | `tūkstoš deviņsimt četrdesmit pirmais līdz tūkstoš deviņsimt četrdesmit piektais gads` | ✅ |
+| `2023./2024.gads` | `divi tūkstoši divdesmit trešais līdz divi tūkstoši divdesmit ceturtais gads` | ✅ |
+| `4.D klase` | `ceturtā d klase` | ✅ |
+| `5.5` | `pieci komats pieci` | ✅ |
+| `Viņam ir 25.` | `Viņam ir divdesmit piektais` | ✅ |
+
+## Glued Initials
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `A.Briāna ielā 16` | `A.Briāna ielā sešpadsmit` | ✅ |
+| `V.Bērziņš` | `V.Bērziņš` | ✅ |
+
+## Glued Units
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `5km` | `pieci kilometri` | ✅ |
+| `2,5kg` | `divi komats pieci kilogrami` | ✅ |
+| `10m²` | `desmit kvadrātmetru` | ✅ |
+| `0–2mm` | `nulle līdz divi milimetri` | ✅ |
+| `5lpp.` | `piecas lappuses` | ✅ |
+| `5min` | `piecimin` | ✅ |
+| `5 m/s` | `pieci metri sekundē` | ✅ |
+| `100km/h` | `simts kilometru stundā` | ✅ |
+
+## Spaced Thousands
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `150 000 eiro` | `simt piecdesmit tūkstoši eiro` | ✅ |
+| `150  000 eiro` | `simt piecdesmit tūkstoši eiro` | ✅ |
+
+## Spaced Abbreviations
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `u. c.` | `un citi` | ✅ |
+| `u. tml.` | `un tamlīdzīgi` | ✅ |
+| `t. i.` | `tas ir` | ✅ |
+| `pr. Kr.` | `pirms Kristus` | ✅ |
+| `p. Kr.` | `pēc Kristus` | ✅ |
+
+## Abbreviation Glued To Digit
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `Nr.5` | `numur pieci` | ✅ |
+| `nr.5` | `numur pieci` | ✅ |
+| `lpp.5` | `lappuse pieci` | ✅ |
+
+## Glued Clock Times
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `plkst.10.00` | `pulksten desmitos` | ✅ |
+| `plkst.10.00 līdz 11.30` | `pulksten desmitos līdz vienpadsmitos trīsdesmit` | ✅ |
+| `plkst. 10.00` | `pulksten desmitos` | ✅ |
+
+## Long Digit Strings
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `01000230010002` | `nulle viens nulle nulle nulle divi trīs nulle nulle viens nulle nulle nulle divi` | ✅ |
+| `kadastra apzīmējums: 01000230010002` | `kadastra apzīmējums: nulle viens nulle nulle nulle divi trīs nulle nulle viens nulle nulle nulle divi` | ✅ |
+| `1234567890` | `viens divi trīs četri pieci seši septiņi astoņi deviņi nulle` | ✅ |
+| `123456789 eiro` | `simt divdesmit trīs miljoni četrsimt piecdesmit seši tūkstoši septiņsimt astoņdesmit deviņi eiro` | ✅ |
+| `0` | `nulle` | ✅ |
+| `05.05.2026` | `pieci komats nulle pieci.divtūkstoš divdesmit seši` | ✅ |
+
+## Billions
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `n=1000000000` | `viens miljards` | ✅ |
+| `n=2500000000` | `divi miljardi piecsimt miljoni` | ✅ |
+| `n=1000000` | `viens miljons` | ✅ |
+
+## Units Before Closing Punctuation
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `“5km”` | `“pieci kilometri”` | ✅ |
+| `(5 km)` | `(pieci kilometri)` | ✅ |
+| `5km!` | `pieci kilometri!` | ✅ |
+| `5 km?` | `pieci kilometri?` | ✅ |
+| `5 km:` | `pieci kilometri:` | ✅ |
+| `“2,5kg”` | `“divi komats pieci kilogrami”` | ✅ |
+| `“10m²”` | `“desmit kvadrātmetru”` | ✅ |
+| `“0–2mm”` | `“nulle līdz divi milimetri”` | ✅ |
+| `“36°C”` | `“trīsdesmit seši grādi”` | ✅ |
+| `“100 km/h”` | `“simts kilometru stundā”` | ✅ |
+| `“5 m/s”` | `“pieci metri sekundē”` | ✅ |
+| `“53T”` | `“piecdesmit trīs tonnas”` | ✅ |
+| `“80–100 km/h”` | `“astoņdesmit līdz simts kilometru stundā”` | ✅ |
+| `2026.gada»` | `divi tūkstoši divdesmit sestā gada»` | ✅ |
+| `3.…` | `trešais…` | ✅ |
+| `5 min` | `pieci min` | ✅ |
+| `5min` | `piecimin` | ✅ |
+| `5 kmh` | `pieci kmh` | ✅ |
+| `2 mājas` | `divas mājas` | ✅ |
+| `5. maijs` | `piektais maijs` | ✅ |
+
+## Glued Units Full Line
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `Pielipušas mērvienības: “5km”, “2,5kg”, “10m²”, “0–2mm”, “5lpp.” iepriekš deva “piecikm”. Saīsinājums pielipis pie cipara: “Nr.5” deva “numurpieci”.` | `Pielipušas mērvienības: “pieci kilometri”, “divi komats pieci kilogrami”, “desmit kvadrātmetru”, “nulle līdz divi milimetri”, “piecas lappuses” iepriekš deva “piecikm”. Saīsinājums pielipis pie cipara: “numur pieci” deva “numurpieci”.` | ✅ |
+
+## Bucket Stops At Closing Quote
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `“Nr.5” deva` | `“numur pieci” deva` | ✅ |
+| `(Nr. 5) mājas` | `(numur pieci) mājas` | ✅ |
+| `1., 2. un 3. vieta` | `pirmā, otrā un trešā vieta` | ✅ |
+| `3.,4.vieta` | `trešā,ceturtā vieta` | ✅ |
+
+## Identifier Codes Are Not Ranges
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `BIS-BL-827846-114426` | `BIS-BL-astoņi divi septiņi astoņi četri seši-viens viens četri četri divi seši` | ✅ |
+| `lieta BIS-BL-827846-114426, būvdarbu` | `lieta BIS-BL-astoņi divi septiņi astoņi četri seši-viens viens četri četri divi seši, būvdarbu` | ✅ |
+| `“BIS-BL-827846-114426”` | `“BIS-BL-astoņi divi septiņi astoņi četri seši-viens viens četri četri divi seši”` | ✅ |
+| `ISBN 978-9934-0-1234-5` | `ISBN deviņi septiņi astoņi-deviņi deviņi trīs četri-nulle-viens divi trīs četri-pieci` | ✅ |
+| `1941–1945 gads` | `tūkstoš deviņsimt četrdesmit pirmais līdz tūkstoš deviņsimt četrdesmit piektais gads` | ✅ |
+| `5–6 grādi` | `pieci līdz seši grādi` | ✅ |
+| `0–2 mm` | `nulle līdz divi milimetri` | ✅ |
+| `10-20 procenti` | `desmit līdz divdesmit procenti` | ✅ |
+| `80–100 km/h` | `astoņdesmit līdz simts kilometru stundā` | ✅ |
+
+## Hyphen After Letter Is Not Minus
+
+| Input | Expected | Result |
+|-------|----------|--------|
+| `COVID-19` | `COVID-deviņpadsmit` | ✅ |
+| `LV-1010` | `LV-tūkstoš desmit` | ✅ |
+| `-5` | `mīnus pieci` | ✅ |
+| `5 -3` | `piecus mīnus trīs` | ✅ |
+| `(-5)` | `(mīnus pieci)` | ✅ |
+| `-5°C` | `mīnus pieci grādi` | ✅ |
+| `-5…-3°C` | `mīnus pieci līdz mīnus trīs grādi` | ✅ |

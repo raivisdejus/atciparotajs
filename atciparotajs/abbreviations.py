@@ -18,6 +18,12 @@ ABBREVIATIONS = {
     "plkst.": "pulksten",
     "pr.Kr.": "pirms Kristus",
     "p.Kr.":  "pēc Kristus",
+    # Officially spaced variants of the same abbreviations
+    "u. c.":   "un citi",
+    "u. tml.": "un tamlīdzīgi",
+    "t. i.":   "tas ir",
+    "pr. Kr.": "pirms Kristus",
+    "p. Kr.":  "pēc Kristus",
 }
 
 # A letter in any alphabet (unicode-aware, excludes digits and underscore)
@@ -32,5 +38,14 @@ _ABBR_RE = re.compile(
 )
 
 
+def _expand_one(m: re.Match, text: str) -> str:
+    expansion = ABBREVIATIONS[m.group(0)]
+    # "Nr.5" — the abbreviation's dot doubles as the separator, so the
+    # expansion needs a space of its own ("numur pieci", not "numurpieci").
+    if m.end() < len(text) and text[m.end()].isdigit():
+        return expansion + " "
+    return expansion
+
+
 def expand_abbreviations(text: str) -> str:
-    return _ABBR_RE.sub(lambda m: ABBREVIATIONS[m.group(0)], text)
+    return _ABBR_RE.sub(lambda m: _expand_one(m, text), text)

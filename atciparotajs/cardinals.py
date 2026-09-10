@@ -90,9 +90,18 @@ def _below_thousand(n: int, bucket: int) -> str:
 
 
 def cardinal(n: int, bucket: int = 1) -> str:
-    """Spell integer n (0-999999999) in Latvian with given bucket."""
+    """Spell integer n (0-999999999999) in Latvian with given bucket."""
     if n == 0:
         return ONES[0][bucket]
+    billions = n // 1_000_000_000
+    rest = n % 1_000_000_000
+    if billions > 0:
+        bil_num = _below_thousand(billions, 1)
+        bil_word = "miljards" if billions == 1 else "miljardi"
+        bil_str = f"{bil_num} {bil_word}"
+        if rest == 0:
+            return bil_str
+        return bil_str + " " + cardinal(rest, bucket)
     millions = n // 1_000_000
     rest = n % 1_000_000
     if millions > 0:

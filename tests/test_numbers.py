@@ -17,6 +17,7 @@ Izmantotie vārdi / Words used in tests:
 
 import pytest
 from atciparotajs import convert, currency
+from atciparotajs.cardinals import cardinal
 
 # NOTE: All test-case constants must be defined here, before any test function.
 
@@ -839,6 +840,208 @@ ACADEMIC_YEAR_CASES = [
 ]
 
 
+# ============================================================
+# Kārtas skaitļi bez atstarpes aiz punkta
+# (ordinals whose dot is glued to the next word — "2026.gada")
+# ============================================================
+ORDINAL_NO_SPACE_CASES = [
+    ("2026.gada augusts",   "divi tūkstoši divdesmit sestā gada augusts"),
+    ("2026.gadā",           "divi tūkstoši divdesmit sestajā gadā"),
+    ("2026.g.",             "divi tūkstoši divdesmit sestais gads"),
+    ("15.augustā",          "piecpadsmitajā augustā"),
+    ("3.vieta",             "trešā vieta"),
+    ("1.klase",             "pirmā klase"),
+    ("2.pants",             "otrais pants"),
+    ("XX.gadsimts",         "divdesmitais gadsimts"),       # roman ordinal
+    ("2026.gada 5.maijā",   "divi tūkstoši divdesmit sestā gada piektajā maijā"),
+    ("(2026.gada)",         "(divi tūkstoši divdesmit sestā gada)"),
+    ("2026.gada.",          "divi tūkstoši divdesmit sestā gada."),
+    ("3., 4. vieta",        "trešā, ceturtā vieta"),
+    ("3.,4.vieta",          "trešā,ceturtā vieta"),
+    ("1941.-1945.gads",
+     "tūkstoš deviņsimt četrdesmit pirmais līdz tūkstoš deviņsimt četrdesmit piektais gads"),
+    ("2023./2024.gads",
+     "divi tūkstoši divdesmit trešais līdz divi tūkstoši divdesmit ceturtais gads"),
+    ("4.D klase",           "ceturtā d klase"),             # class notation still wins
+    ("5.5",                 "pieci komats pieci"),          # decimal, not an ordinal
+    ("Viņam ir 25.",        "Viņam ir divdesmit piektais"), # trailing ordinal unchanged
+]
+
+# Iniciāļi paliek neskarti arī bez atstarpes aiz punkta
+# (name initials stay untouched even when glued to the surname)
+GLUED_INITIAL_CASES = [
+    ("A.Briāna ielā 16",    "A.Briāna ielā sešpadsmit"),    # "A" is no Roman numeral
+    ("V.Bērziņš",           "V.Bērziņš"),                   # initial before a surname
+]
+
+# ============================================================
+# Mērvienības bez atstarpes aiz skaitļa (units glued to the number)
+# ============================================================
+GLUED_UNIT_CASES = [
+    ("5km",         "pieci kilometri"),
+    ("2,5kg",       "divi komats pieci kilogrami"),
+    ("10m²",        "desmit kvadrātmetru"),          # gen pl, as for "10 km²"
+    ("0–2mm",       "nulle līdz divi milimetri"),
+    ("5lpp.",       "piecas lappuses"),
+    # "min" is not the unit "m" — only the number is spoken
+    ("5min",        "piecimin"),
+    ("5 m/s",       "pieci metri sekundē"),
+    ("100km/h",     "simts kilometru stundā"),
+]
+
+# ============================================================
+# Tūkstoši ar dubultu atstarpi (thousands split by a double space)
+# ============================================================
+SPACED_THOUSANDS_CASES = [
+    ("150 000 eiro",    "simt piecdesmit tūkstoši eiro"),
+    ("150  000 eiro",   "simt piecdesmit tūkstoši eiro"),   # two spaces
+]
+
+# ============================================================
+# Saīsinājumi ar atstarpi (officially spaced abbreviations)
+# ============================================================
+SPACED_ABBR_CASES = [
+    ("u. c.",       "un citi"),
+    ("u. tml.",     "un tamlīdzīgi"),
+    ("t. i.",       "tas ir"),
+    ("pr. Kr.",     "pirms Kristus"),
+    ("p. Kr.",      "pēc Kristus"),
+]
+
+# Saīsinājums pielipis skaitlim (abbreviation glued to a digit)
+GLUED_ABBR_DIGIT_CASES = [
+    ("Nr.5",        "numur pieci"),
+    ("nr.5",        "numur pieci"),
+    ("lpp.5",       "lappuse pieci"),
+]
+
+# ============================================================
+# Pulksteņa norāde pielipusi laikam (clock-time cue glued to the time)
+# ============================================================
+GLUED_TIME_CASES = [
+    ("plkst.10.00",             "pulksten desmitos"),
+    ("plkst.10.00 līdz 11.30",  "pulksten desmitos līdz vienpadsmitos trīsdesmit"),
+    ("plkst. 10.00",            "pulksten desmitos"),
+]
+
+# ============================================================
+# Garas ciparu virknes un sākuma nulles
+# (long digit strings and leading zeros — identifier codes)
+# ============================================================
+LONG_DIGIT_CASES = [
+    ("01000230010002",
+     "nulle viens nulle nulle nulle divi trīs nulle nulle viens nulle nulle nulle divi"),
+    ("kadastra apzīmējums: 01000230010002",
+     "kadastra apzīmējums: nulle viens nulle nulle nulle divi trīs "
+     "nulle nulle viens nulle nulle nulle divi"),
+    ("1234567890",
+     "viens divi trīs četri pieci seši septiņi astoņi deviņi nulle"),
+    # nine digits are still a quantity
+    ("123456789 eiro",
+     "simt divdesmit trīs miljoni četrsimt piecdesmit seši tūkstoši "
+     "septiņsimt astoņdesmit deviņi eiro"),
+    ("0", "nulle"),
+    ("05.05.2026", "pieci komats nulle pieci.divtūkstoš divdesmit seši"),
+]
+
+# Miljardi (billions)
+BILLION_CASES = [
+    (1_000_000_000, "viens miljards"),
+    (2_500_000_000, "divi miljardi piecsimt miljoni"),
+    (1_000_000, "viens miljons"),
+]
+
+# ============================================================
+# Mērvienības pēdiņās, iekavās vai pirms pieturzīmes
+# Units followed by a closing quote, bracket or "!?:"
+# ============================================================
+QUOTED_UNIT_CASES = [
+    ("“5km”",           "“pieci kilometri”"),
+    ("(5 km)",          "(pieci kilometri)"),
+    ("5km!",            "pieci kilometri!"),
+    ("5 km?",           "pieci kilometri?"),
+    ("5 km:",           "pieci kilometri:"),
+    ("“2,5kg”",         "“divi komats pieci kilogrami”"),
+    ("“10m²”",          "“desmit kvadrātmetru”"),
+    ("“0–2mm”",         "“nulle līdz divi milimetri”"),
+    ("“36°C”",          "“trīsdesmit seši grādi”"),
+    ("“100 km/h”",      "“simts kilometru stundā”"),
+    ("“5 m/s”",         "“pieci metri sekundē”"),
+    ("“53T”",           "“piecdesmit trīs tonnas”"),
+    ("“80–100 km/h”",   "“astoņdesmit līdz simts kilometru stundā”"),
+    ("2026.gada»",      "divi tūkstoši divdesmit sestā gada»"),
+    ("3.…",             "trešais…"),
+    # nemainīgi / unchanged: "min" and "kmh" are not unit abbreviations
+    ("5 min",           "pieci min"),
+    ("5min",            "piecimin"),
+    ("5 kmh",           "pieci kmh"),
+    ("2 mājas",         "divas mājas"),
+    ("5. maijs",        "piektais maijs"),
+]
+
+# Viss teikums ar pielipušām mērvienībām / whole line, nothing left unexpanded
+QUOTED_UNIT_LINE_CASES = [
+    ("Pielipušas mērvienības: “5km”, “2,5kg”, “10m²”, “0–2mm”, “5lpp.” "
+     "iepriekš deva “piecikm”. Saīsinājums pielipis pie cipara: "
+     "“Nr.5” deva “numurpieci”.",
+     "Pielipušas mērvienības: “pieci kilometri”, “divi komats pieci kilogrami”, "
+     "“desmit kvadrātmetru”, “nulle līdz divi milimetri”, “piecas lappuses” "
+     "iepriekš deva “piecikm”. Saīsinājums pielipis pie cipara: "
+     "“numur pieci” deva “numurpieci”."),
+]
+
+# ============================================================
+# Locījums nepārlec pāri aizverošai pēdiņai vai iekavai
+# Noun agreement stops at a closing quote/bracket
+# ============================================================
+BUCKET_STOP_CASES = [
+    ("“Nr.5” deva",         "“numur pieci” deva"),
+    ("(Nr. 5) mājas",       "(numur pieci) mājas"),
+    # komats, punkts un domuzīme neaptur / commas, dots and dashes do not stop it
+    ("1., 2. un 3. vieta",  "pirmā, otrā un trešā vieta"),
+    ("3.,4.vieta",          "trešā,ceturtā vieta"),
+]
+
+# ============================================================
+# Identifikatori ar divām vai vairāk domuzīmēm nav diapazons
+# A token with two or more dashes is an identifier code, not a range
+# ============================================================
+_BIS_CODE = ("BIS-BL-astoņi divi septiņi astoņi četri seši-"
+             "viens viens četri četri divi seši")
+CODE_TOKEN_CASES = [
+    ("BIS-BL-827846-114426",    _BIS_CODE),
+    ("lieta BIS-BL-827846-114426, būvdarbu",
+     f"lieta {_BIS_CODE}, būvdarbu"),
+    ("“BIS-BL-827846-114426”",  f"“{_BIS_CODE}”"),
+    ("ISBN 978-9934-0-1234-5",
+     "ISBN deviņi septiņi astoņi-deviņi deviņi trīs četri-nulle-"
+     "viens divi trīs četri-pieci"),
+    # viena domuzīme joprojām ir diapazons / one dash is still a range
+    ("1941–1945 gads",
+     "tūkstoš deviņsimt četrdesmit pirmais līdz "
+     "tūkstoš deviņsimt četrdesmit piektais gads"),
+    ("5–6 grādi",       "pieci līdz seši grādi"),
+    ("0–2 mm",          "nulle līdz divi milimetri"),
+    ("10-20 procenti",  "desmit līdz divdesmit procenti"),
+    ("80–100 km/h",     "astoņdesmit līdz simts kilometru stundā"),
+]
+
+# ============================================================
+# Domuzīme pielipusi burtam nav mīnusa zīme
+# A hyphen glued to a letter is not a minus sign
+# ============================================================
+LETTER_MINUS_CASES = [
+    ("COVID-19",    "COVID-deviņpadsmit"),
+    ("LV-1010",     "LV-tūkstoš desmit"),
+    # īsts mīnuss joprojām strādā / real negatives still work
+    ("-5",          "mīnus pieci"),
+    ("5 -3",        "piecus mīnus trīs"),
+    ("(-5)",        "(mīnus pieci)"),
+    ("-5°C",        "mīnus pieci grādi"),
+    ("-5…-3°C",     "mīnus pieci līdz mīnus trīs grādi"),
+]
+
+
 @pytest.mark.parametrize("text,expected", ONE_CASES)
 def test_one_inflections(text, expected):
     assert convert(text) == expected
@@ -1088,4 +1291,74 @@ def test_dotted_clock_times(text, expected):
 
 @pytest.mark.parametrize("text,expected", NOT_A_TIME_CASES)
 def test_dotted_numbers_are_not_times(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", ORDINAL_NO_SPACE_CASES)
+def test_ordinal_without_space(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", GLUED_INITIAL_CASES)
+def test_glued_initials(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", GLUED_UNIT_CASES)
+def test_glued_units(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SPACED_THOUSANDS_CASES)
+def test_spaced_thousands(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", SPACED_ABBR_CASES)
+def test_spaced_abbreviations(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", GLUED_ABBR_DIGIT_CASES)
+def test_abbreviation_glued_to_digit(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", GLUED_TIME_CASES)
+def test_glued_clock_times(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", LONG_DIGIT_CASES)
+def test_long_digit_strings(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("n,expected", BILLION_CASES)
+def test_billions(n, expected):
+    assert cardinal(n) == expected
+
+
+@pytest.mark.parametrize("text,expected", QUOTED_UNIT_CASES)
+def test_units_before_closing_punctuation(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", QUOTED_UNIT_LINE_CASES)
+def test_glued_units_full_line(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", BUCKET_STOP_CASES)
+def test_bucket_stops_at_closing_quote(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", CODE_TOKEN_CASES)
+def test_identifier_codes_are_not_ranges(text, expected):
+    assert convert(text) == expected
+
+
+@pytest.mark.parametrize("text,expected", LETTER_MINUS_CASES)
+def test_hyphen_after_letter_is_not_minus(text, expected):
     assert convert(text) == expected

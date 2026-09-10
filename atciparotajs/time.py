@@ -53,7 +53,7 @@ _MM = r'[0-5]\d'
 # Not part of a longer number/date, and not followed by more digits
 _NOT_NUM_BEFORE = r'(?<![\d.,:])'
 _NOT_NUM_AFTER = r'(?![\d]|[.,]\d)'
-_CUE = r'(?:plkst[.:]?|pulksten)(?!\w)'
+_CUE = r'(?:plkst[.:]?|pulksten)(?![^\W\d_])'
 
 # Clock time "H:MM" must be expanded before the general pattern sees the digits
 _TIME_PAT = re.compile(r'\b(\d{1,2}):(\d{2})\b')
@@ -67,7 +67,7 @@ _TIME_RANGE_PAT = re.compile(
 
 # Dotted time after a cue word, optionally continued by "līdz HH.MM"
 _CUED_TIME_PAT = re.compile(
-    rf'(?P<cue>\b{_CUE}\s+)(?P<h1>{_HH})\.(?P<m1>{_MM}){_NOT_NUM_AFTER}'
+    rf'(?P<cue>\b{_CUE}\s*)(?P<h1>{_HH})\.(?P<m1>{_MM}){_NOT_NUM_AFTER}'
     rf'(?:(?P<mid>\s+līdz\s+)(?P<h2>{_HH})\.(?P<m2>{_MM}){_NOT_NUM_AFTER})?',
     re.IGNORECASE,
 )
@@ -80,7 +80,11 @@ def _expand_time_range(m: re.Match) -> str:
 
 
 def _expand_cued_time(m: re.Match) -> str:
-    out = m.group("cue") + clock_time(int(m.group("h1")), int(m.group("m1")))
+    cue = m.group("cue")
+    # "plkst.10.00" — the cue is glued to the time, so it needs its own space
+    if cue and not cue[-1].isspace():
+        cue += " "
+    out = cue + clock_time(int(m.group("h1")), int(m.group("m1")))
     if m.group("h2") is not None:
         out += m.group("mid") + clock_time(int(m.group("h2")), int(m.group("m2")))
     return out
